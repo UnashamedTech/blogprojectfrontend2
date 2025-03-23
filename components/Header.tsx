@@ -1,0 +1,45 @@
+import Link from "next/link"
+import { Button } from "../components/ui/button"
+
+export default function Header() {
+  return (
+    <header className="w-full py-6 px-6 md:px-12 flex items-center justify-between">
+      <Link href="/" className="text-white text-2xl md:text-3xl font-serif">
+        Sebsibe Elias
+      </Link>
+      <nav className="hidden md:flex items-center space-x-8">
+        <Link href="/" className="text-white border-b-2 border-white pb-1 font-medium">
+          Home
+        </Link>
+        <Link
+          href="/about"
+          className="text-white hover:border-b-2 hover:border-white pb-1 transition-all duration-200 font-medium"
+        >
+          About
+        </Link>
+        <Link
+          href="/blogs"
+          className="text-white hover:border-b-2 hover:border-white pb-1 transition-all duration-200 font-medium"
+        >
+          Blogs
+        </Link>
+        <Link
+          href="/support"
+          className="text-white hover:border-b-2 hover:border-white pb-1 transition-all duration-200 font-medium"
+        >
+          Support
+        </Link>
+        <Link
+          href="/contact"
+          className="text-white hover:border-b-2 hover:border-white pb-1 transition-all duration-200 font-medium"
+        >
+          Contact
+        </Link>
+      </nav>
+      <Button variant="outline" className="bg-white text-black hover:bg-gray-100 font-medium rounded-md">
+        Sign In
+      </Button>
+    </header>
+  )
+}
+
