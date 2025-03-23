@@ -1,1 +1,1 @@
-// type of blog related 
+// type of blog related

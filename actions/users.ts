@@ -1,4 +1,4 @@
-"use server";
+'use server';
 
 // import apiCall from "@/base-api/api";
 
