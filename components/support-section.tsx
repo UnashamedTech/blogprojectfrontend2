@@ -23,7 +23,7 @@ export default function SupportSection() {
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Support Me</h2>
           <p className="text-lg text-gray-700 mb-10">
-            Your support helps me continue sharing God's love and making a positive impact in the world. Every
+            Your support helps me continue sharing Gods love and making a positive impact in the world. Every
             contribution, no matter how small, makes a difference.
           </p>
 
