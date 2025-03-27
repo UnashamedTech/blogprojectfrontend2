@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { Button } from "../components/ui/button"
+import { Button } from "@/components/ui/button"
 
-export default function Header() {
+const Header = () => {
   return (
-    <header className="w-full py-6 px-6 md:px-12 flex items-center justify-between">
+    <header className="w-full py-6 px-6 md:px-12 flex items-center justify-between bg-gradient-to-b from-black/100 to-transparent absolute top-0 left-0 right-0 z-10">
       <Link href="/" className="text-white text-2xl md:text-3xl font-serif">
         Sebsibe Elias
       </Link>
@@ -42,4 +42,6 @@ export default function Header() {
     </header>
   )
 }
+
+export default Header
 
