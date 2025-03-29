@@ -18,12 +18,12 @@ export default function AboutSection() {
               </p>
             </div>
             <Button
-              variant="outline"
-              className="mt-8 border-black text-black hover:bg-black hover:text-white group"
+              variant="secondary" 
+              className="mt-8 bg-black text-white hover:bg-gray-800 transition"
               asChild
             >
               <Link href="/about">
-                Read More <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Read More <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
