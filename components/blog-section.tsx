@@ -41,8 +41,8 @@ const blogPosts = [
 
 export default function BlogSection() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background image */}
+    <section className="py-16 md:py-24 relative overflow-hidden bg-[#F7FAFF]">
+      
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -63,20 +63,20 @@ export default function BlogSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
             <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <div className="relative h-64">
+              <div className="relative h-64 md:h-80 lg:h-80">
                 <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
                 <div className="absolute top-4 left-4">
                   <span className="bg-black text-white text-sm font-medium px-3 py-1 rounded">{post.category}</span>
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 min-h-[180px] flex flex-col">
                 <div className="border-l-2 border-black pl-3 mb-4">
                   <p className="text-sm font-medium">{post.date}</p>
                 </div>
 
                 <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-                <p className="text-gray-700 mb-4">{post.excerpt}</p>
+                <p className="text-gray-700 mb-4 flex-grow">{post.excerpt}</p>
 
                 <Link
                   href={`/blogs/${post.id}`}
@@ -113,4 +113,3 @@ export default function BlogSection() {
     </section>
   )
 }
-

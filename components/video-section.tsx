@@ -25,13 +25,13 @@ export default function VideoSection() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button className="bg-red-600 hover:bg-red-700 text-white px-8 py-6 h-auto text-lg rounded-md">
+              <Button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 h-auto text-lg rounded-md">
                 Subscribe
               </Button>
 
               <Button
                 variant="outline"
-                className="bg-black text-white border-black hover:bg-gray-800 px-8 py-6 h-auto text-lg rounded-md"
+                className="bg-black text-white border-black hover:bg-gray-800 px-4 py-2 h-auto text-lg rounded-md"
               >
                 Share Video
               </Button>
@@ -42,4 +42,3 @@ export default function VideoSection() {
     </section>
   )
 }
-
