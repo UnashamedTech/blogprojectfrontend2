@@ -111,7 +111,7 @@ export function TestimonialsCarousel() {
         onTouchEnd={handleTouchEnd}
       >
         <div className="relative w-full h-[400px]">
-          {getVisibleTestimonials().map((testimonial, index) => {
+          {getVisibleTestimonials().map((testimonial) => {
             const position = testimonial.position as "left" | "center" | "right"
 
             return (
@@ -125,7 +125,7 @@ export function TestimonialsCarousel() {
                 )}
               >
                 <CardContent className="p-0 flex flex-col items-center text-center">
-                  <blockquote className="text-sm text-gray-600 mb-6">"{testimonial.quote}"</blockquote>
+                  <blockquote className="text-sm text-gray-600 mb-6">&quot;{testimonial.quote}&quot;</blockquote>
                   <Avatar className="h-16 w-16 mb-2">
                     <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
                     <AvatarFallback>
