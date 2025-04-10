@@ -1,3 +1,4 @@
+'use client'
 import Header from "../landing-page/Header"
 import HeroSection from "../blogs-page/hero-section"
 import BlogsCard from "../blogs-page/blogs-card"
