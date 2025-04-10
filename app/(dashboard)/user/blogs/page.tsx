@@ -1,5 +1,5 @@
 'use server';
-import BlogsPageView from '@/components/views/about-page';
+import BlogsPageView from '@/components/views/blogs-page';
 
 function Blogs() {
   return (
