@@ -19,25 +19,25 @@ const Header = () => {
             Home
           </Link>
           <Link
-            href="/about"
+            href="/user/about"
             className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
           >
             About
           </Link>
           <Link
-            href="/blogs"
+            href="/user/blogs"
             className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
           >
             Blogs
           </Link>
           <Link
-            href="/support"
+            href="/user/support"
             className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
           >
             Support
           </Link>
           <Link
-            href="/contact"
+            href="/user/contact"
             className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
           >
             Contact
