@@ -11,11 +11,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Pagination } from "@/components/blogs-page/pagination"
 
 // Mock data - replace with real API calls later
-const mockBlogs = [
+ export const mockBlogs = [
   {
     id: 1,
     image: "/images/blog-1.jpg",
     category: "Faith",
+    author: "Sebsibe Elias Lodiso",
     date: "2021-09-17",
     title: "Finding Peace in Faith",
     excerpt: "Discover how faith can bring peace to your daily life...",
@@ -26,6 +27,7 @@ const mockBlogs = [
     id: 2,
     image: "/images/blog-2.jpg",
     category: "Faith",
+    author: "Sebsibe Elias Lodiso",
     date: "2021-10-05",
     title: "The Power of Prayer",
     excerpt: "Exploring the transformative power of daily prayer...",
@@ -36,6 +38,7 @@ const mockBlogs = [
     id: 3,
     image: "/images/blog-3.jpg",
     category: "Life",
+    author: "Sebsibe Elias Lodiso",
     date: "2021-11-12",
     title: "Balancing Work and Family",
     excerpt: "Tips for maintaining harmony between career and home...",
@@ -46,6 +49,7 @@ const mockBlogs = [
     id: 4,
     image: "/images/blog-4.png",
     category: "Life",
+    author: "Sebsibe Elias Lodiso",
     date: "2022-01-15",
     title: "Mindfulness Practices",
     excerpt: "Simple mindfulness exercises for stress reduction...",
@@ -56,6 +60,7 @@ const mockBlogs = [
     id: 5,
     image: "/images/blog-5.png",
     category: "Mission",
+    author: "Sebsibe Elias Lodiso",
     date: "2022-03-22",
     title: "Community Outreach",
     excerpt: "How our mission is making a difference locally...",
@@ -66,6 +71,7 @@ const mockBlogs = [
     id: 6,
     image: "/images/blog-6.png",
     category: "Mission",
+    author: "Sebsibe Elias Lodiso",
     date: "2022-05-30",
     title: "Global Impact",
     excerpt: "Stories from our international mission trips...",
@@ -73,6 +79,57 @@ const mockBlogs = [
     comments: 27
   }
 ]
+
+interface BlogCardProps {
+  id: number
+  image: string
+  category: string
+  date: string
+  title: string
+  excerpt: string
+  location: string
+  comments: number
+}
+
+function BlogCard({ id, image, category, date, title, excerpt, location, comments }: BlogCardProps) {
+  return (
+    <div className="overflow-hidden rounded-lg bg-white shadow h-full flex flex-col">
+      <div className="relative h-[280px] lg:h-[320px] w-full">
+        <div className="absolute left-4 top-4 z-10 rounded bg-black px-3 py-1 text-sm font-medium text-white">
+          {category}
+        </div>
+        <Image 
+          src={image || "/placeholder.svg"} 
+          alt={title} 
+          fill 
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      </div>
+      <div className="px-6 py-4 flex-1 flex flex-col">
+        <div className="mb-2 text-sm text-gray-500">{date}</div>
+        <h2 className="mb-3 text-xl font-bold">{title}</h2>
+        <p className="mb-4 text-gray-600 line-clamp-3">{excerpt}</p>
+        <Link 
+          href={`/user/blogs/${id}`} 
+          className="mb-4 flex items-center text-sm font-medium mt-auto"
+        >
+          Continue Reading <ChevronRight className="ml-1 h-4 w-4" />
+        </Link>
+        <div className="flex items-center justify-between border-t pt-4">
+          <div className="flex items-center text-sm text-gray-500">
+            <MapPin className="mr-1 h-4 w-4" />
+            {location}
+          </div>
+          <div className="flex items-center text-sm text-gray-500">
+            <MessageSquare className="mr-1 h-4 w-4" />
+            Comment ({comments})
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function BlogsCard() {
   const router = useRouter()
@@ -252,6 +309,7 @@ export default function BlogsCard() {
               {getCurrentPageItems().map((blog) => (
                 <BlogCard
                   key={blog.id}
+                  id={blog.id}
                   image={blog.image}
                   category={blog.category}
                   date={new Date(blog.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -278,53 +336,5 @@ export default function BlogsCard() {
         )}
       </section>
     </main>
-  )
-}
-
-// BlogCard component remains the same
-interface BlogCardProps {
-  image: string
-  category: string
-  date: string
-  title: string
-  excerpt: string
-  location: string
-  comments: number
-}
-
-function BlogCard({ image, category, date, title, excerpt, location, comments }: BlogCardProps) {
-  return (
-    <div className="overflow-hidden rounded-lg bg-white shadow h-full flex flex-col">
-      <div className="relative h-[280px] lg:h-[320px] w-full">
-        <div className="absolute left-4 top-4 z-10 rounded bg-black px-3 py-1 text-sm font-medium text-white">
-          {category}
-        </div>
-        <Image 
-          src={image || "/placeholder.svg"} 
-          alt={title} 
-          fill 
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-      <div className="px-6 py-4 flex-1 flex flex-col">
-        <div className="mb-2 text-sm text-gray-500">{date}</div>
-        <h2 className="mb-3 text-xl font-bold">{title}</h2>
-        <p className="mb-4 text-gray-600 line-clamp-3">{excerpt}</p>
-        <Link href="#" className="mb-4 flex items-center text-sm font-medium mt-auto">
-          Continue Reading <ChevronRight className="ml-1 h-4 w-4" />
-        </Link>
-        <div className="flex items-center justify-between border-t pt-4">
-          <div className="flex items-center text-sm text-gray-500">
-            <MapPin className="mr-1 h-4 w-4" />
-            {location}
-          </div>
-          <div className="flex items-center text-sm text-gray-500">
-            <MessageSquare className="mr-1 h-4 w-4" />
-            Comment ({comments})
-          </div>
-        </div>
-      </div>
-    </div>
   )
 }
