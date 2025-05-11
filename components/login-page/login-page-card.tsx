@@ -18,7 +18,10 @@ const LoginPageCard = () => {
 
   useEffect(() => {
     const token = searchParams?.get('token');
-    const blogId = searchParams?.get('blogId');
+    const blogId = sessionStorage.getItem('currentBlogId');
+    console.log('Token:', token);
+    console.log('BlogId:', blogId);
+
     
     if (token) {
       // Call server action to handle the callback
@@ -32,14 +35,18 @@ const LoginPageCard = () => {
     }
   }, [searchParams, router]);
 
-  const handleLogin = () => {
-    const blogId = sessionStorage.getItem('currentBlogId');
-    if (blogId) {
-      window.location.href = `/api/auth/google?blogId=${blogId}`;
-    } else {
-      window.location.href = '/api/auth/google';
-    }
-  };
+const handleLogin = () => {
+  const backendUrl = process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL;
+  if (!backendUrl) {
+    console.error('API base URL not configured');
+    return;
+  }
+
+  const blogId = sessionStorage.getItem('currentBlogId');
+  window.location.href = `${backendUrl}/${
+    blogId ? `?state=${encodeURIComponent(blogId)}` : ''
+  }`;
+};
 
   return (
     <Card className="flex-1 flex items-center justify-center flex-col gap-6">

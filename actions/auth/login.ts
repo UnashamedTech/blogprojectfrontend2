@@ -12,20 +12,21 @@ const Url = {
 };
 
 export const googleAuthCallback = async (blogId?: string) => {
-  const callbackUrl = blogId 
+  const callbackUrl = blogId
     ? `${process.env.GOOGLE_CALLBACK_URL}/${blogId}`
     : process.env.GOOGLE_CALLBACK_URL;
-  
+
   redirect(callbackUrl ?? '/api/auth/google');
+  
 };
 
 export const handleAuthCallback = async (token: string, blogId?: string) => {
   const cookieStore = await cookies();
-  
+
   try {
     // Verify token with your backend
     const userData = await verifyTokenWithBackend(token);
-    
+
     // Set auth cookies
     cookieStore.set('auth-token', token, {
       httpOnly: true,
@@ -55,7 +56,7 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
       redirect(`/user/blogs/${blogId}`);
     }
     return redirect('/');
-    
+
   } catch (error) {
     console.error('Authentication failed:', error);
     redirect('/login?error=auth_failed');
@@ -64,7 +65,7 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
 
 async function verifyTokenWithBackend(token: string) {
   // Implement your actual token verification with backend
-  const response = await apiCall({ 
+  const response = await apiCall({
     url: '/auth/verify',
     method: 'POST',
     data: { token },
