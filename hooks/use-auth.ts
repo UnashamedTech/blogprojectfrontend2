@@ -21,7 +21,7 @@ export function useAuth() {
         role: accountData.role?.name || null,
         imageUrl: accountData.imageUrl || null,
         userId: accountData.userId || null,
-        token: null
+        token: null,
       };
       setUser(userInfo);
       return true;

@@ -17,7 +17,6 @@ export const googleAuthCallback = async (blogId?: string) => {
     : process.env.GOOGLE_CALLBACK_URL;
 
   redirect(callbackUrl ?? '/api/auth/google');
-  
 };
 
 export const handleAuthCallback = async (token: string, blogId?: string) => {
@@ -42,7 +41,7 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
       role: userData.role?.name || null,
       imageUrl: userData.imageUrl || null,
       userId: userData.userId || null,
-      token: token
+      token: token,
     };
 
     cookieStore.set('user-profile', JSON.stringify(userInfo), {
@@ -56,7 +55,6 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
       redirect(`/user/blogs/${blogId}`);
     }
     return redirect('/');
-
   } catch (error) {
     console.error('Authentication failed:', error);
     redirect('/login?error=auth_failed');
@@ -69,7 +67,7 @@ async function verifyTokenWithBackend(token: string) {
     url: '/auth/verify',
     method: 'POST',
     data: { token },
-    tag: 'verify-token'
+    tag: 'verify-token',
   });
   return response;
 }

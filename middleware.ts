@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
     try {
       const decoded = JSON.parse(atob(token.split('.')[1]));
       const now = Math.floor(Date.now() / 1000);
-      
+
       if (decoded.exp < now) {
         await logoutAction();
         return NextResponse.redirect(new URL('/log-in', req.url));

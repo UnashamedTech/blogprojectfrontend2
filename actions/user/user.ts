@@ -1,13 +1,13 @@
-'use server';
-import {
-    DeleteRequest,
-    GetRequest,
-    PostRequest,
-    PatchRequest,
-} from '@/base-api/method';
-const Url = {
-    userComment: `comment/blog`,
-};
+// 'use server';
+// import {
+//     DeleteRequest,
+//     GetRequest,
+//     PostRequest,
+//     PatchRequest,
+// } from '@/base-api/method';
+// const Url = {
+//     userComment: `comment/blog`,
+// };
 
 // export const handleSubmitComment = async (body: content) => {
 //     const postRequest = new PostRequest(
