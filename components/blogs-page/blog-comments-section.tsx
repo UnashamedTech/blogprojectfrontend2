@@ -61,14 +61,17 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
     setComments(mockComments);
   }, [blogId]);
 
-  const requireAuth = async (action: () => Promise<void>) => {
-    const isAuthenticated = await checkAuth();
-    if (!isAuthenticated) {
-      setShowLoginCard(true);
-      return;
-    }
-    await action();
-  };
+const requireAuth = async (action: () => Promise<void>) => {
+  const isAuthenticated = await checkAuth();
+  if (!isAuthenticated) {
+    // Save the blogId so the user can be redirected back after login
+    sessionStorage.setItem('redirectBlogId', blogId.toString());
+    setShowLoginCard(true);
+    return;
+  }
+  await action();
+};
+
 
   const handleSubmitComment = async () => {
     if (!comment.trim()) return;
