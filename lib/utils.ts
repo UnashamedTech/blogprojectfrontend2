@@ -1,48 +1,41 @@
 import { clsx, type ClassValue } from 'clsx';
 import { jwtDecode } from 'jwt-decode';
 import { twMerge } from 'tailwind-merge';
-//import { v4 as uuidv4 } from 'uuid';
+import type { DecodedToken } from '@/types/auth'; // Make sure this path is correct
 
+/**
+ * Combines class names using Tailwind Merge
+ */
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function decodeToken(token: string) {
+/**
+ * Decodes a JWT token and returns a typed payload
+ */
+export function decodeToken(token: string): DecodedToken | null {
   try {
-    return jwtDecode(token); // Returns the decoded payload
+    return jwtDecode<DecodedToken>(token); // Strongly typed
   } catch {
     return null;
   }
 }
-export function getFallBack(fullName: string) {
-  // takes in a name and returns its initals
+
+/**
+ * Extracts initials from a full name
+ */
+export function getFallBack(fullName: string): string {
   return fullName
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase())
     .join('');
 }
 
-// const formatDate = (isoString: string) => {
-//   const date = new Date(isoString);
-//   return date.toLocaleDateString('en-US', {
-//     year: 'numeric',
-//     month: 'long',
-//     day: 'numeric',
-//   });
-// };
-
-// const formatTime = (isoString: string) => {
-//   const date = new Date(isoString);
-//   return date.toLocaleTimeString('en-US', {
-//     hour: '2-digit',
-//     minute: '2-digit',
-//   });
-// };
-
-// lib/auth.ts
-export async function verifyToken(token: string) {
+/**
+ * Checks if a token is valid (can be decoded)
+ */
+export async function verifyToken(token: string): Promise<boolean> {
   try {
-    // Example JWT verification
     const decoded = decodeToken(token);
     return !!decoded;
   } catch {
