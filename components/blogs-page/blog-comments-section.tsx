@@ -101,8 +101,8 @@ const requireAuth = async (action: () => Promise<void>) => {
       setIsSubmitting(true);
       const newReply: Reply = {
         id: Date.now().toString(),
-        userId: user?.userId || "unknown",
-        userName: user?.userName || "Anonymous",
+        userId: user?.userId!,
+        userName: user?.userName!,
         userImage: user?.imageUrl || "/placeholder.svg",
         content: replyContent,
         createdAt: new Date(),
@@ -165,7 +165,7 @@ const requireAuth = async (action: () => Promise<void>) => {
           onChange={(e) => setComment(e.target.value)}
           className="mb-2 bg-white"
           rows={3}
-          onClick={() => requireAuth(async () => {})} // Fix: wrap with async
+          onClick={() => requireAuth(async () => {})} 
         />
         <div className="flex justify-end">
           <Button
@@ -189,7 +189,7 @@ const requireAuth = async (action: () => Promise<void>) => {
                   <AvatarFallback>{comment.userName.substring(0, 2)}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="font-semibold">{comment.userName}</div>
+                  <div className="font-semibold text-gray-500">{comment.userName}</div>
                   <div className="text-sm text-gray-500">
                     {comment.createdAt.toLocaleDateString("en-US", {
                       month: "short",
