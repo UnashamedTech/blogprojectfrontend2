@@ -4,9 +4,9 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Account, User_Info } from '@/types/user';
 import apiCall from '../../base-api/api';
+import { decodeToken } from '@/lib/utils'; 
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
 const Url = {
   login: `${BASE_URL}/auth/google`,
 };
@@ -20,13 +20,17 @@ export const googleAuthCallback = async (blogId?: string) => {
 };
 
 export const handleAuthCallback = async (token: string, blogId?: string) => {
-  const cookieStore = await cookies();
-
   try {
-    // Verify token with your backend
-    const userData = await verifyTokenWithBackend(token);
+    const userData = decodeToken(token);
 
-    // Set auth cookies
+    if (!userData) {
+      console.error('Token decode failed');
+      return redirect('/login?error=invalid_token');
+    }
+
+
+    const cookieStore = await cookies();
+
     cookieStore.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -36,7 +40,6 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
 
     const userInfo: User_Info = {
       userName: userData.name || userData.email || '',
-      accountId: userData.id,
       roleId: userData.role?.id || null,
       role: userData.role?.name || null,
       imageUrl: userData.imageUrl || null,
@@ -46,42 +49,39 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
 
     cookieStore.set('user-profile', JSON.stringify(userInfo), {
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
+      maxAge: 60 * 60 * 24 * 7,
       path: '/',
     });
 
-    // Redirect to blog if blogId exists
-    if (blogId) {
-      redirect(`/user/blogs/${blogId}`);
+    const role = Array.isArray(userData.roles)
+      ? userData.roles[0]?.toUpperCase()
+      : userData.roles?.toUpperCase();
+    console.log('userData.roles', userData.roles)
+    if (role === 'USER') {
+      if (!blogId) return redirect('/login?error=missing_blog_id');
+      return redirect(`/user/blogs/${blogId}`);
+    } else if (role === 'OWNER') {
+      return redirect('/admin');
+    } else {
+      return redirect('/');
     }
-    return redirect('/');
   } catch (error) {
     console.error('Authentication failed:', error);
-    redirect('/login?error=auth_failed');
+    return redirect('/login?error=auth_failed');
   }
 };
 
-async function verifyTokenWithBackend(token: string) {
-  // Implement your actual token verification with backend
-  const response = await apiCall({
-    url: '/auth/verify',
-    method: 'POST',
-    data: { token },
-    tag: 'verify-token',
-  });
-  return response;
-}
-
-// ... keep your other existing functions
 export const apiUrl = async () => {
   return process.env.API_URL;
 };
+
 export const userProfile = async () => {
   const cookieStore = await cookies();
   const userProfile = cookieStore.get('user-profile')?.value;
-  const user: Account = userProfile && JSON.parse(userProfile);
+  const user: Account = userProfile ? JSON.parse(userProfile) : null;
   return user;
 };
+
 export const userToken = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get('auth-token')?.value;
