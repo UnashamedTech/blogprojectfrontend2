@@ -16,7 +16,7 @@ export default function BlogPost() {
 
   // Ensure blogId is a valid number
   const blogId = Number(params?.id);
-  
+
   const blog = mockBlogs.find((blog) => blog.id === blogId);
 
   useEffect(() => {

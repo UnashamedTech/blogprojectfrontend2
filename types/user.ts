@@ -31,11 +31,10 @@ export type Account = {
 export interface User_Info {
   userId: string | null;
   userName: string | null;
-  roleId: string | null; 
-  role: string | null;   
+  roleId: string | null;
+  role: string | null;
   imageUrl: string | null;
   token: string | null;
 }
-
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';

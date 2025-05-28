@@ -13,7 +13,6 @@ import {
 } from 'chart.js';
 import { Dot } from 'lucide-react';
 
-
 Chart.register(ArcElement, Tooltip, Legend, DoughnutController);
 
 interface CategoryData {
@@ -61,7 +60,7 @@ export function CategoryChart() {
       options: {
         responsive: true,
         maintainAspectRatio: true,
-        cutout: '70%', 
+        cutout: '70%',
         plugins: {
           legend: {
             display: false,

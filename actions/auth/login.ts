@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Account, User_Info } from '@/types/user';
 import apiCall from '../../base-api/api';
-import { decodeToken } from '@/lib/utils'; 
+import { decodeToken } from '@/lib/utils';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 const Url = {
@@ -27,7 +27,6 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
       console.error('Token decode failed');
       return redirect('/login?error=invalid_token');
     }
-
 
     const cookieStore = await cookies();
 
@@ -56,7 +55,7 @@ export const handleAuthCallback = async (token: string, blogId?: string) => {
     const role = Array.isArray(userData.roles)
       ? userData.roles[0]?.toUpperCase()
       : userData.roles?.toUpperCase();
-    console.log('userData.roles', userData.roles)
+    console.log('userData.roles', userData.roles);
     if (role === 'USER') {
       if (!blogId) return redirect('/login?error=missing_blog_id');
       return redirect(`/user/blogs/${blogId}`);

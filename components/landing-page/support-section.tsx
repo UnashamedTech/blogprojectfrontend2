@@ -29,10 +29,7 @@ export default function SupportSection() {
             small&lsquo; makes a difference.
           </p>
 
-          <Button
-            className="bg-black text-white hover:bg-gray-800  h-auto text-lg rounded-md font-['EBGaramond']"
-            
-          >
+          <Button className="bg-black text-white hover:bg-gray-800  h-auto text-lg rounded-md font-['EBGaramond']">
             <Link
               href="/support"
               className="inline-flex items-center font-['EBGaramond']"

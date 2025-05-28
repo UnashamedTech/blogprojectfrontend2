@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Heart, MessageSquare } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { useAuth } from "@/hooks/use-auth";
-import LoginPageCard from "@/components/login-page/login-page-card";
+import { useState, useEffect } from 'react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Heart, MessageSquare } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { useAuth } from '@/hooks/use-auth';
+import LoginPageCard from '@/components/login-page/login-page-card';
 
 // Types
 interface Comment {
@@ -37,10 +37,10 @@ interface BlogCommentsProps {
 
 export default function BlogComments({ blogId }: BlogCommentsProps) {
   const { user, loading, checkAuth } = useAuth();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
-  const [replyContent, setReplyContent] = useState("");
+  const [replyContent, setReplyContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showLoginCard, setShowLoginCard] = useState(false);
 
@@ -48,12 +48,12 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
   useEffect(() => {
     const mockComments: Comment[] = [
       {
-        id: "1",
-        userId: "user1",
-        userName: "Eyosias Solomon",
-        userImage: "/placeholder.svg",
-        content: "Lorem ipsum dolor sit amet...",
-        createdAt: new Date("2024-02-03"),
+        id: '1',
+        userId: 'user1',
+        userName: 'Eyosias Solomon',
+        userImage: '/placeholder.svg',
+        content: 'Lorem ipsum dolor sit amet...',
+        createdAt: new Date('2024-02-03'),
         likes: 246,
         replies: [],
       },
@@ -61,35 +61,34 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
     setComments(mockComments);
   }, [blogId]);
 
-const requireAuth = async (action: () => Promise<void>) => {
-  const isAuthenticated = await checkAuth();
-  if (!isAuthenticated) {
-    // Save the blogId so the user can be redirected back after login
-    sessionStorage.setItem('redirectBlogId', blogId.toString());
-    setShowLoginCard(true);
-    return;
-  }
-  await action();
-};
-
+  const requireAuth = async (action: () => Promise<void>) => {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+      // Save the blogId so the user can be redirected back after login
+      sessionStorage.setItem('redirectBlogId', blogId.toString());
+      setShowLoginCard(true);
+      return;
+    }
+    await action();
+  };
 
   const handleSubmitComment = async () => {
     if (!comment.trim()) return;
-    
+
     await requireAuth(async () => {
       setIsSubmitting(true);
       const newComment: Comment = {
         id: Date.now().toString(),
         userId: user!.userId!,
         userName: user!.userName!,
-        userImage: user!.imageUrl || "/placeholder.svg",
+        userImage: user!.imageUrl || '/placeholder.svg',
         content: comment,
         createdAt: new Date(),
         likes: 0,
         replies: [],
       };
       setComments((prev) => [newComment, ...prev]);
-      setComment("");
+      setComment('');
       setIsSubmitting(false);
     });
   };
@@ -103,7 +102,7 @@ const requireAuth = async (action: () => Promise<void>) => {
         id: Date.now().toString(),
         userId: user?.userId!,
         userName: user?.userName!,
-        userImage: user?.imageUrl || "/placeholder.svg",
+        userImage: user?.imageUrl || '/placeholder.svg',
         content: replyContent,
         createdAt: new Date(),
         likes: 0,
@@ -116,7 +115,7 @@ const requireAuth = async (action: () => Promise<void>) => {
             : comment
         )
       );
-      setReplyContent("");
+      setReplyContent('');
       setReplyingTo(null);
       setIsSubmitting(false);
     });
@@ -141,8 +140,8 @@ const requireAuth = async (action: () => Promise<void>) => {
       <div className="w-full p-8 flex justify-center">
         <div className="max-w-md w-full">
           <LoginPageCard />
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full mt-4"
             onClick={() => setShowLoginCard(false)}
           >
@@ -165,7 +164,7 @@ const requireAuth = async (action: () => Promise<void>) => {
           onChange={(e) => setComment(e.target.value)}
           className="mb-2 bg-white"
           rows={3}
-          onClick={() => requireAuth(async () => {})} 
+          onClick={() => requireAuth(async () => {})}
         />
         <div className="flex justify-end">
           <Button
@@ -186,15 +185,19 @@ const requireAuth = async (action: () => Promise<void>) => {
               <div className="flex items-center mb-2">
                 <Avatar className="h-10 w-10 mr-3">
                   <AvatarImage src={comment.userImage} alt={comment.userName} />
-                  <AvatarFallback>{comment.userName.substring(0, 2)}</AvatarFallback>
+                  <AvatarFallback>
+                    {comment.userName.substring(0, 2)}
+                  </AvatarFallback>
                 </Avatar>
                 <div>
-                  <div className="font-semibold text-gray-500">{comment.userName}</div>
+                  <div className="font-semibold text-gray-500">
+                    {comment.userName}
+                  </div>
                   <div className="text-sm text-gray-500">
-                    {comment.createdAt.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
+                    {comment.createdAt.toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
                     })}
                   </div>
                 </div>
@@ -215,7 +218,9 @@ const requireAuth = async (action: () => Promise<void>) => {
                   className="flex items-center space-x-1 text-gray-600"
                   onClick={() =>
                     requireAuth(async () =>
-                      setReplyingTo(replyingTo === comment.id ? null : comment.id)
+                      setReplyingTo(
+                        replyingTo === comment.id ? null : comment.id
+                      )
                     )
                   }
                 >
@@ -227,7 +232,9 @@ const requireAuth = async (action: () => Promise<void>) => {
                   className="text-gray-600"
                   onClick={() =>
                     requireAuth(async () =>
-                      setReplyingTo(replyingTo === comment.id ? null : comment.id)
+                      setReplyingTo(
+                        replyingTo === comment.id ? null : comment.id
+                      )
                     )
                   }
                 >
@@ -246,7 +253,10 @@ const requireAuth = async (action: () => Promise<void>) => {
                     rows={2}
                   />
                   <div className="flex justify-end space-x-2">
-                    <Button variant="outline" onClick={() => setReplyingTo(null)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => setReplyingTo(null)}
+                    >
                       Cancel
                     </Button>
                     <Button
@@ -266,13 +276,20 @@ const requireAuth = async (action: () => Promise<void>) => {
                     <div key={reply.id} className="border-t pt-4">
                       <div className="flex items-center mb-2">
                         <Avatar className="h-8 w-8 mr-2">
-                          <AvatarImage src={reply.userImage} alt={reply.userName} />
-                          <AvatarFallback>{reply.userName.substring(0, 2)}</AvatarFallback>
+                          <AvatarImage
+                            src={reply.userImage}
+                            alt={reply.userName}
+                          />
+                          <AvatarFallback>
+                            {reply.userName.substring(0, 2)}
+                          </AvatarFallback>
                         </Avatar>
                         <div>
                           <div className="font-semibold">{reply.userName}</div>
                           <div className="text-xs text-gray-500">
-                            {formatDistanceToNow(reply.createdAt, { addSuffix: true })}
+                            {formatDistanceToNow(reply.createdAt, {
+                              addSuffix: true,
+                            })}
                           </div>
                         </div>
                       </div>

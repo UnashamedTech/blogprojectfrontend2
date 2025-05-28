@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiChevronLeft} from 'react-icons/fi';
+import { FiChevronLeft } from 'react-icons/fi';
 
 import { LuUser } from 'react-icons/lu';
 import { CiSettings } from 'react-icons/ci';
@@ -20,9 +20,7 @@ const menuItems = [
   { icon: FiTag, label: 'Categories', href: '/admin/categories' },
 ];
 
-const footerItems = [
-  { icon: CiSettings, label: 'Setting', href: '/settings' },
-];
+const footerItems = [{ icon: CiSettings, label: 'Setting', href: '/settings' }];
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);

@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import type { Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
-import { toast } from 'sonner'; 
+import { toast } from 'sonner';
 
 export function Header({ title }: { title: string }) {
   const [clientUser, setClientUser] = useState<Account | null>(null);

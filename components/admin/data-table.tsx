@@ -134,7 +134,6 @@ const DataTable = <T extends { id: string | number }>({
     return matchesSearch && matchesFilters;
   });
 
-
   const handleDelete = (id: string | number) => {
     setDeleteDialog({ open: true, id });
   };

@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import { CalendarIcon } from 'lucide-react';
 
-
 Chart.register(
   LineElement,
   PointElement,
@@ -39,7 +38,6 @@ export function PerformanceChart() {
     const ctx = chartRef.current.getContext('2d');
     if (!ctx) return;
 
-   
     const chartInstance = Chart.getChart(chartRef.current);
     if (chartInstance) {
       chartInstance.destroy();

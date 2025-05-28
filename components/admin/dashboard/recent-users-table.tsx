@@ -3,8 +3,8 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import DataTable from '@/components/admin/data-table';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import type { Column} from '@/types/data-table';
-import { toast } from 'sonner'; 
+import type { Column } from '@/types/data-table';
+import { toast } from 'sonner';
 import { endPoints } from '@/data/end-points';
 import { deleteUser } from '@/actions/admin/admin';
 import type { Account, User } from '@/types/user';
@@ -39,8 +39,6 @@ const columns: Column<User>[] = [
   { key: 'joinedDate', header: 'joined Date' },
 ];
 
-
-
 const RecentUsers: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,7 +64,7 @@ const RecentUsers: React.FC = () => {
       setTriggerState(!triggerState);
       toast.success('User Successfully deleted.');
     } catch {
-        toast.error('An error occurred while deleting the user.');
+      toast.error('An error occurred while deleting the user.');
     }
   };
 

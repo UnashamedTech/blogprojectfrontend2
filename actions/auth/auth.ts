@@ -14,8 +14,8 @@ export async function setAuthCookie(token: string) {
   const userData: User_Info = {
     userId: decoded.sub ?? null,
     userName: decoded.email ?? null,
-    roleId: null, 
-    role: decoded.roles[0], 
+    roleId: null,
+    role: decoded.roles[0],
     imageUrl: decoded.imageUrl ?? null,
     token,
   };
@@ -47,7 +47,6 @@ export async function setAuthCookie(token: string) {
 
   return true;
 }
-
 
 export async function removeUserProfile() {
   const cookieStore = await cookies();

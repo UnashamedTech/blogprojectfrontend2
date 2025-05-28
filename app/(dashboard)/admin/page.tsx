@@ -13,26 +13,25 @@ function AdminPage() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-const checkAuthorization = () => {
-  const userProfileCookie = getCookie('user-profile') as string | undefined;
-  if (!userProfileCookie) {
-    setAuthorized(false);
-    return;
-  }
+    const checkAuthorization = () => {
+      const userProfileCookie = getCookie('user-profile') as string | undefined;
+      if (!userProfileCookie) {
+        setAuthorized(false);
+        return;
+      }
 
-  try {
-    const profile = JSON.parse(userProfileCookie);
-    if (profile.role === 'OWNER') {
-      setAuthorized(true);
-    } else {
-      setAuthorized(false);
-    }
-  } catch (err) {
-    console.error('Failed to parse user profile:', err);
-    setAuthorized(false);
-  }
-};
-
+      try {
+        const profile = JSON.parse(userProfileCookie);
+        if (profile.role === 'OWNER') {
+          setAuthorized(true);
+        } else {
+          setAuthorized(false);
+        }
+      } catch (err) {
+        console.error('Failed to parse user profile:', err);
+        setAuthorized(false);
+      }
+    };
 
     const initialize = async () => {
       const tokenFromUrl = searchParams?.get('token');
@@ -43,7 +42,7 @@ const checkAuthorization = () => {
         const response = await setAuthCookie(tokenFromUrl);
 
         if (response === true) {
-          checkAuthorization(); 
+          checkAuthorization();
         } else {
           setAuthorized(false);
         }
