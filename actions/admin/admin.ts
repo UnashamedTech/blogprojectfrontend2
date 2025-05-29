@@ -5,16 +5,28 @@ import {
   PostRequest,
   PatchRequest,
 } from '@/base-api/method';
+import { inviteUserProps } from '@/types/requests';
 const Url = {
   userDelete: `admin/user/user`,
+  inviteUser: `admin/user/user`,
 };
 
 export const deleteUser = async (id: string) => {
   const deleteRequest = new DeleteRequest(
     `${Url.userDelete}/${id}`,
-    'delete-mentor'
+    'delete-user'
   );
   const data = await deleteRequest.deleteData();
+  return data;
+};
+
+export const inviteUser = async (body: inviteUserProps) => {
+  const postRequest = new PostRequest(
+    `${Url.inviteUser}`,
+    'invite-mentor',
+    body
+  );
+  const data = postRequest.postData();
   return data;
 };
 
