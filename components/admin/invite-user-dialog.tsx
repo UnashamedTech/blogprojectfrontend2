@@ -53,13 +53,13 @@ export function InviteUserDialog({
     try {
       const response = await inviteUser(requestBody);
       if (response.error) {
-toast.error('Failed to invite the user. Please try again later.');
+        toast.error('Failed to invite the user. Please try again later.');
       }
       toast.success(`Invitation sent to ${formData.email}`);
       setFormData({ name: '', email: '' });
       setIsOpen(false);
     } catch (error) {
-toast.error('Failed to invite the user. Please try again later.');
+      toast.error('Failed to invite the user. Please try again later.');
     }
     setTriggerState(!triggerState);
   };

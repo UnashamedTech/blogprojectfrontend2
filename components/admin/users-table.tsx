@@ -47,20 +47,20 @@ const UsersTable: React.FC = () => {
     };
     fetchUserProfile();
   }, []);
-   const endPoint = `${endPoints.allUsers}`;
+  const endPoint = `${endPoints.allUsers}`;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
   const handleDelete = async (id: string | number) => {
     try {
       const response = await deleteUser(id as string);
       if (response.error) {
-toast.error('Failed to delete the user. Please try again later.');
+        toast.error('Failed to delete the user. Please try again later.');
       }
 
       setTriggerState(!triggerState);
-toast.success('User Successfully deleted.');
+      toast.success('User Successfully deleted.');
     } catch {
-toast.error('An error occurred while deleting the user.');
+      toast.error('An error occurred while deleting the user.');
     }
   };
 
@@ -69,7 +69,7 @@ toast.error('An error occurred while deleting the user.');
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Users</h1>
-          <h2 className='text-xl '>Manage your Users</h2>
+          <h2 className="text-xl ">Manage your Users</h2>
           <InviteUserDialog
             userName={clientUser?.name as string}
             accountId={clientUser?.id || ''}
