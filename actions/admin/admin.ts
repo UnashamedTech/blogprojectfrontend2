@@ -21,11 +21,7 @@ export const deleteUser = async (id: string) => {
 };
 
 export const inviteUser = async (body: inviteUserProps) => {
-  const postRequest = new PostRequest(
-    `${Url.inviteUser}`,
-    'invite-user',
-    body
-  );
+  const postRequest = new PostRequest(`${Url.inviteUser}`, 'invite-user', body);
   const data = postRequest.postData();
   return data;
 };
