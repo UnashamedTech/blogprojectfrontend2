@@ -2,7 +2,7 @@
 
 import type React from 'react';
 import { useState, useEffect } from 'react';
-import { Filter, Search, Trash2, X } from 'lucide-react';
+import { Filter, Search, Trash2, X, Eye, Edit } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -39,6 +39,12 @@ export interface Column<T> {
   render?: (value: T) => React.ReactNode;
 }
 
+export interface ActionConfig {
+  view?: boolean;
+  edit?: boolean;
+  delete?: boolean;
+}
+
 interface DataTableProps<T> {
   tag: string;
   apiUrl: string;
@@ -48,7 +54,10 @@ interface DataTableProps<T> {
   currentPage: number;
   onPageChange: (page: number) => void;
   onDelete?: (id: string | number) => Promise<void>;
+  onView?: (item: T) => void;
+  onEdit?: (item: T) => void;
   enableActions?: boolean;
+  actionConfig?: ActionConfig;
   enablePagination?: boolean;
   onError?: (error: string) => void;
   triggerState: boolean;
@@ -67,7 +76,10 @@ const DataTable = <T extends { id: string | number }>({
   currentPage,
   onPageChange,
   onDelete,
+  onView,
+  onEdit,
   enableActions = true,
+  actionConfig = { view: false, edit: false, delete: true },
   enablePagination = true,
   onError,
   triggerState,
@@ -97,7 +109,7 @@ const DataTable = <T extends { id: string | number }>({
 
         if (response && response.data) {
           setData(response.data);
-          setTotalPages(response.meta.totalPages); // Use meta.totalPages for pagination
+          setTotalPages(response.meta.totalPages);
         } else {
           throw new Error('Invalid response format');
         }
@@ -118,14 +130,12 @@ const DataTable = <T extends { id: string | number }>({
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-  // Apply search and filters to the data
+
   const filteredData = data.filter((item) => {
-    // Apply search
     const matchesSearch = searchFields.some((field) =>
       item[field]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Apply filters
     const matchesFilters = filters.every((filter) => {
       const [key, value] = filter.split(':');
       return item[key as keyof T]?.toString() === value;
@@ -156,6 +166,18 @@ const DataTable = <T extends { id: string | number }>({
     }
   };
 
+  const handleView = (item: T) => {
+    onView?.(item);
+  };
+
+  const handleEdit = (item: T) => {
+    onEdit?.(item);
+  };
+
+  const hasActions =
+    enableActions &&
+    (actionConfig.view || actionConfig.edit || actionConfig.delete);
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-4">
@@ -184,9 +206,7 @@ const DataTable = <T extends { id: string | number }>({
                     `${String(option.key)}:${option.label}`
                   )}
                   onCheckedChange={() => {
-                    const filterString = `${String(option.key)}:${
-                      option.label
-                    }`;
+                    const filterString = `${String(option.key)}:${option.label}`;
                     setFilters((prev) =>
                       prev.includes(filterString)
                         ? prev.filter((f) => f !== filterString)
@@ -221,7 +241,7 @@ const DataTable = <T extends { id: string | number }>({
               {columns.map((col) => (
                 <TableHead key={col.key as string}>{col.header}</TableHead>
               ))}
-              {enableActions && <TableHead>Actions</TableHead>}
+              {hasActions && <TableHead>Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -233,9 +253,13 @@ const DataTable = <T extends { id: string | number }>({
                       <Skeleton className="h-6 w-24" />
                     </TableCell>
                   ))}
-                  {enableActions && (
+                  {hasActions && (
                     <TableCell>
-                      <Skeleton className="h-6 w-6" />
+                      <div className="flex items-center gap-2">
+                        <Skeleton className="h-8 w-8" />
+                        <Skeleton className="h-8 w-8" />
+                        <Skeleton className="h-8 w-8" />
+                      </div>
                     </TableCell>
                   )}
                 </TableRow>
@@ -243,7 +267,7 @@ const DataTable = <T extends { id: string | number }>({
             ) : filteredData.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length + (enableActions ? 1 : 0)}
+                  colSpan={columns.length + (hasActions ? 1 : 0)}
                   className="text-center"
                 >
                   No data available
@@ -259,16 +283,43 @@ const DataTable = <T extends { id: string | number }>({
                         : (item[col.key] as React.ReactNode)}
                     </TableCell>
                   ))}
-                  {enableActions && (
+                  {hasActions && (
                     <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(item.id)}
-                        className="h-8 w-8"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        {actionConfig.view && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleView(item)}
+                            className="h-8 w-8 text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                            title="View"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {actionConfig.edit && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleEdit(item)}
+                            className="h-8 w-8 text-green-600 hover:text-green-800 hover:bg-green-50"
+                            title="Edit"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                        )}
+                        {actionConfig.delete && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleDelete(item.id)}
+                            className="h-8 w-8 text-red-600 hover:text-red-800 hover:bg-red-50"
+                            title="Delete"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
                     </TableCell>
                   )}
                 </TableRow>
