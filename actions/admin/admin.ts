@@ -8,7 +8,7 @@ import {
 import { inviteUserProps } from '@/types/requests';
 const Url = {
   userDelete: `admin/user/user`,
-  inviteUser: `admin/user/user`,
+  inviteUser: `admin/user/invite`,
 };
 
 export const deleteUser = async (id: string) => {
@@ -23,7 +23,7 @@ export const deleteUser = async (id: string) => {
 export const inviteUser = async (body: inviteUserProps) => {
   const postRequest = new PostRequest(
     `${Url.inviteUser}`,
-    'invite-mentor',
+    'invite-user',
     body
   );
   const data = postRequest.postData();
