@@ -22,16 +22,11 @@ interface InviteUserFormData {
 }
 interface InviteUserDialogProps {
   userName: string;
-  accountId: string;
-  role: string;
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function InviteUserDialog({
-  userName,
-  accountId,
-  role,
   triggerState,
   setTriggerState,
 }: InviteUserDialogProps) {
@@ -45,7 +40,6 @@ export function InviteUserDialog({
     e.preventDefault();
 
     const requestBody = {
-      accountId: accountId as string,
       name: formData.name,
       email: formData.email,
     };
