@@ -2,7 +2,8 @@
 import type React from 'react';
 import { useEffect, useState } from 'react';
 import DataTable from '@/components/admin/data-table';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import UserDetailsModal from '@/components/admin/user-details-modal';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Column } from '@/types/data-table';
 import { toast } from 'sonner';
 import { InviteUserDialog } from './invite-user-dialog';
@@ -15,30 +16,43 @@ const columns: Column<User>[] = [
   {
     key: 'name',
     header: 'Users',
-    render: (recent: User) => (
-      <div className="flex items-center gap-2">
-        <Avatar className="h-8 w-8">
-          <AvatarFallback>{recent.fullname?.slice(0, 2)}</AvatarFallback>
-        </Avatar>
-        {recent.fullname}
-      </div>
-    ),
+    render: (user: User) => {
+      const displayName = user.name || user.fullname || 'Unknown User';
+      return (
+        <div className="flex items-center gap-2">
+          <Avatar className="h-8 w-8">
+            {user.imageUrl && (
+              <AvatarImage
+                src={user.imageUrl || '/placeholder.svg?height=32&width=32'}
+                alt={displayName}
+              />
+            )}
+            <AvatarFallback>
+              {displayName.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          {displayName}
+        </div>
+      );
+    },
   },
   { key: 'email', header: 'Email' },
   {
     key: 'joinedDate',
     header: 'Joined Date',
-    render: (recent: any) =>
-      recent.createdAt ? new Date(recent.createdAt).toLocaleDateString() : '-',
+    render: (user: User) =>
+      user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '-',
   },
 ];
 
-const searchFields: (keyof User)[] = ['name', 'location'];
+const searchFields: (keyof User)[] = ['name', 'email', 'location'];
 
 const UsersTable: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [userDetailsOpen, setUserDetailsOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -47,6 +61,7 @@ const UsersTable: React.FC = () => {
     };
     fetchUserProfile();
   }, []);
+
   const endPoint = `${endPoints.allUsers}`;
   const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
@@ -64,6 +79,11 @@ const UsersTable: React.FC = () => {
     }
   };
 
+  const handleView = (user: User) => {
+    setSelectedUser(user);
+    setUserDetailsOpen(true);
+  };
+
   return (
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
@@ -72,8 +92,6 @@ const UsersTable: React.FC = () => {
           <h2 className="text-xl ">Manage your Users</h2>
           <InviteUserDialog
             userName={clientUser?.name as string}
-            accountId={clientUser?.id || ''}
-            role={clientUser?.role?.name as string}
             triggerState={triggerState as boolean}
             setTriggerState={
               setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
@@ -91,12 +109,24 @@ const UsersTable: React.FC = () => {
             currentPage={currentPage}
             onPageChange={setCurrentPage}
             onDelete={handleDelete}
+            onView={handleView}
+            actionConfig={{
+              view: true,
+              edit: false,
+              delete: true,
+            }}
             triggerState={triggerState as boolean}
             setTriggerState={
               setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
             }
           />
         )}
+
+        <UserDetailsModal
+          user={selectedUser}
+          open={userDetailsOpen}
+          onOpenChange={setUserDetailsOpen}
+        />
       </div>
     </div>
   );
