@@ -52,6 +52,7 @@ export function InviteUserDialog({
       toast.success(`Invitation sent to ${formData.email}`);
       setFormData({ name: '', email: '' });
       setIsOpen(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('Failed to invite the user. Please try again later.');
     }
