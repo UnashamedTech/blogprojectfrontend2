@@ -1,11 +1,11 @@
 'use server';
-import UsersTable from '@/components/admin/users-table';
+import CategoriesTable from '@/components/admin/categories/categories-table';
 
-function Users() {
+function Categories() {
   return (
     <>
-      <UsersTable />
+      <CategoriesTable />
     </>
   );
 }
-export default Users;
+export default Categories;
