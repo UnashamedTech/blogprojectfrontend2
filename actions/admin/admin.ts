@@ -12,6 +12,13 @@ const Url = {
   categoryDelete: `admin/user/user`,
    addCategory: `admin/user/invite`,
     updateCategory: `admin/category/update`,
+  blogDelete: `admin/blog/delete`,
+};
+
+export const inviteUser = async (body: inviteUserProps) => {
+  const postRequest = new PostRequest(`${Url.inviteUser}`, 'invite-user', body);
+  const data = postRequest.postData();
+  return data;
 };
 
 export const deleteUser = async (id: string) => {
@@ -20,6 +27,12 @@ export const deleteUser = async (id: string) => {
     'delete-user'
   );
   const data = await deleteRequest.deleteData();
+  return data;
+};
+
+export const addCategory = async (body: addCategoryProps) => {
+  const postRequest = new PostRequest(`${Url.addCategory}`, 'add-category', body);
+  const data = postRequest.postData();
   return data;
 };
 
@@ -42,15 +55,13 @@ export const updateCategory = async (id: string, body: updateCategoryProps) => {
   return data;
 };
 
-export const inviteUser = async (body: inviteUserProps) => {
-  const postRequest = new PostRequest(`${Url.inviteUser}`, 'invite-user', body);
-  const data = postRequest.postData();
-  return data;
-};
 
-export const addCategory = async (body: addCategoryProps) => {
-  const postRequest = new PostRequest(`${Url.addCategory}`, 'add-category', body);
-  const data = postRequest.postData();
+export const deleteBlog = async (id: string) => {
+  const deleteRequest = new DeleteRequest(
+    `${Url.blogDelete}/${id}`,
+    'delete-blog'
+  );
+  const data = await deleteRequest.deleteData();
   return data;
 };
 
