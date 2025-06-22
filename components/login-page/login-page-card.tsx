@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/card';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { handleAuthCallback } from '@/actions/auth/login';
 
 const LoginPageCard = () => {
   const searchParams = useSearchParams();
@@ -19,34 +18,27 @@ const LoginPageCard = () => {
   useEffect(() => {
     const token = searchParams?.get('token');
     const blogId = sessionStorage.getItem('currentBlogId');
-    console.log('Token:', token);
-    console.log('BlogId:', blogId);
 
-    
     if (token) {
-      // Call server action to handle the callback
-      handleAuthCallback(token, blogId || undefined)
-        .then(() => {
-          // This will redirect via the server action
-        })
-        .catch(() => {
-          router.push('/login?error=auth_failed');
-        });
+      // Redirect to API route to handle server-side auth
+      const query = new URLSearchParams({ token });
+      if (blogId) query.set('state', blogId);
+      router.push(`/api/auth/callback?${query.toString()}`);
     }
   }, [searchParams, router]);
 
-const handleLogin = () => {
-  const backendUrl = process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL;
-  if (!backendUrl) {
-    console.error('API base URL not configured');
-    return;
-  }
+  const handleLogin = () => {
+    const backendUrl = process.env.NEXT_PUBLIC_GOOGLE_CALLBACK_URL;
+    if (!backendUrl) {
+      console.error('API base URL not configured');
+      return;
+    }
 
-  const blogId = sessionStorage.getItem('currentBlogId');
-  window.location.href = `${backendUrl}/${
-    blogId ? `?state=${encodeURIComponent(blogId)}` : ''
-  }`;
-};
+    const blogId = sessionStorage.getItem('currentBlogId');
+    window.location.href = `${backendUrl}${
+      blogId ? `?state=${encodeURIComponent(blogId)}` : ''
+    }`;
+  };
 
   return (
     <Card className="flex-1 flex items-center justify-center flex-col gap-6">

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 
 const Header = () => {
   return (
@@ -14,42 +13,36 @@ const Header = () => {
         <nav className="hidden md:flex items-center space-x-12">
           <Link
             href="/"
-            className="text-white border-b-2 text-2xl border-transparent hover:border-white pb-1 transition duration-200 font-['EBGaramond']"
+            className="text-white border-b-2  border-transparent hover:border-white pb-1 transition duration-200 font-['EBGaramond']"
           >
             Home
           </Link>
           <Link
             href="/user/about"
-            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
+            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200  font-['EBGaramond']"
           >
             About
           </Link>
           <Link
             href="/user/blogs"
-            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
+            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200  font-['EBGaramond']"
           >
             Blogs
           </Link>
           <Link
             href="/user/support"
-            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
+            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200  font-['EBGaramond']"
           >
             Support
           </Link>
           <Link
             href="/user/contact"
-            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200 text-xl font-['EBGaramond']"
+            className="text-white border-b-2 border-transparent hover:border-white pb-1 transition-all duration-200  font-['EBGaramond']"
           >
             Contact
           </Link>
         </nav>
       </div>
-      <Button
-        variant="outline"
-        className="bg-white text-black hover:bg-gray-100 text-xl font-bold rounded-md p-5 font-['EBGaramond']"
-      >
-        Sign In
-      </Button>
     </header>
   );
 };

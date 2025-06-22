@@ -1,17 +1,23 @@
-"use client";
+'use client';
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Image from "next/image";
-import Autoplay from "embla-carousel-autoplay";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Image from 'next/image';
+import Autoplay from 'embla-carousel-autoplay';
 
 export default function HeroSection() {
   const images = [
-    "/images/blog-1.jpg",
-    "/images/blog-2.jpg",
-    "/images/blog-3.jpg",
-    "/images/blog-4.png",
-    "/images/blog-5.png",
-    "/images/blog-6.png",
+    '/images/blog-1.jpg',
+    '/images/blog-2.jpg',
+    '/images/blog-3.jpg',
+    '/images/blog-4.png',
+    '/images/blog-5.png',
+    '/images/blog-6.png',
   ];
 
   return (

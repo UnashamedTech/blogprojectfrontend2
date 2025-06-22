@@ -1,19 +1,16 @@
-// types of user data fetched
 export interface LayoutProps {
   children: React.ReactNode;
 }
 export interface User {
   userId?: string;
-  id?: string;
+  id: string | number;
   name?: string;
-  username?: string;
+  fullname?: string;
   email?: string;
   phoneNumber?: string;
-  phone?: string;
   imageUrl?: string;
   joinedDate?: string;
   location?: string;
-  platform?: string;
   avatar?: string;
   date?: string;
   accounts?: Account[];
@@ -31,14 +28,13 @@ export type Account = {
   userId?: string;
 };
 
-export type User_Info = {
+export interface User_Info {
+  userId: string | null;
   userName: string | null;
-  accountId: string | null;
   roleId: string | null;
   role: string | null;
-  token?: string | null;
-  imageUrl?: string | null;
-  userId?: string | null;
-};
+  imageUrl: string | null;
+  token: string | null;
+}
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';
