@@ -35,6 +35,7 @@ export function Header({ title }: { title: string }) {
         const userAccount: Account = await userProfile();
         setClientUser(userAccount);
       } catch (error) {
+        console.log(error);
         toast.error('Failed to fetch user profile. Please try again later.');
         setClientUser(null);
       }
@@ -80,7 +81,7 @@ export function Header({ title }: { title: string }) {
     if (clientUser) {
       profile();
     }
-  }, [clientUser]);
+  }, [clientUser, profile]);
 
   return (
     <header className="flex h-14 items-center justify-between border-b px-4">
