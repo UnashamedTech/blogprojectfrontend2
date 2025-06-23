@@ -17,6 +17,7 @@ import type { Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
 import { toast } from 'sonner';
+import { useCallback } from 'react';
 
 export function Header({ title }: { title: string }) {
   const [clientUser, setClientUser] = useState<Account | null>(null);
@@ -43,7 +44,7 @@ export function Header({ title }: { title: string }) {
     fetchClientUser();
   }, []);
 
-  const profile = async () => {
+  const profile = useCallback(async () => {
     if (!clientUser) return;
 
     try {
@@ -62,7 +63,7 @@ export function Header({ title }: { title: string }) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [clientUser]);
 
   const goToProfile = () => {
     const roleName =
@@ -87,7 +88,10 @@ export function Header({ title }: { title: string }) {
     <header className="flex h-14 items-center justify-between border-b px-4">
       <h1 className="text-base font-normal">{title}</h1>
       <div className="flex items-center space-x-4">
-        <button className="text-gray-600 hover:text-gray-900">
+        <button
+          title="notification"
+          className="text-gray-600 hover:text-gray-900"
+        >
           <FiBell className="h-5 w-5" />
         </button>
         <Dialog>

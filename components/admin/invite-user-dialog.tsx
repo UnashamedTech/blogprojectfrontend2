@@ -53,6 +53,7 @@ export function InviteUserDialog({
       setFormData({ name: '', email: '' });
       setIsOpen(false);
     } catch (error) {
+      console.log(error)
       toast.error('Failed to invite the user. Please try again later.');
     }
     setTriggerState(!triggerState);
