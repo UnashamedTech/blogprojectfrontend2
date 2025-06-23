@@ -100,10 +100,8 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
       setIsSubmitting(true);
       const newReply: Reply = {
         id: Date.now().toString(),
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        userId: user?.userId!,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-        userName: user?.userName!,
+        userId: user?.userId || '',
+        userName: user?.userName || '',
         userImage: user?.imageUrl || '/placeholder.svg',
         content: replyContent,
         createdAt: new Date(),
