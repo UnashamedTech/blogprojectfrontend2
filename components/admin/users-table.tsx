@@ -6,6 +6,7 @@ import UserDetailsModal from '@/components/admin/user-details-modal';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { Column } from '@/types/data-table';
 import { toast } from 'sonner';
+import { InviteUserDialog } from './invite-user-dialog';
 import { endPoints } from '@/data/end-points';
 import { deleteUser } from '@/actions/admin/admin';
 import type { Account, User } from '@/types/user';
@@ -46,7 +47,7 @@ const columns: Column<User>[] = [
 
 const searchFields: (keyof User)[] = ['name', 'email', 'location'];
 
-const RecentUsers: React.FC = () => {
+const UsersTable: React.FC = () => {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [triggerState, setTriggerState] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const RecentUsers: React.FC = () => {
   }, []);
 
   const endPoint = `${endPoints.allUsers}`;
-  const [itemsPerPage, onItemsPerPageChange] = useState<number>(5);
+  const [itemsPerPage, onItemsPerPageChange] = useState<number>(10);
 
   const handleDelete = async (id: string | number) => {
     try {
@@ -87,11 +88,19 @@ const RecentUsers: React.FC = () => {
     <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Recent Users</h1>
+          <h1 className="text-2xl font-semibold">Users</h1>
+          <h2 className="text-xl ">Manage your Users</h2>
+          <InviteUserDialog
+            userName={clientUser?.name as string}
+            triggerState={triggerState as boolean}
+            setTriggerState={
+              setTriggerState as React.Dispatch<React.SetStateAction<boolean>>
+            }
+          />
         </div>
         {clientUser && (
           <DataTable<User>
-            tag="recent-users"
+            tag="users-table"
             apiUrl={endPoint}
             columns={columns}
             searchFields={searchFields}
@@ -123,4 +132,4 @@ const RecentUsers: React.FC = () => {
   );
 };
 
-export default RecentUsers;
+export default UsersTable;

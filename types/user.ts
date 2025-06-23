@@ -1,12 +1,15 @@
+import type React from 'react';
 export interface LayoutProps {
   children: React.ReactNode;
 }
+
 export interface User {
   userId?: string;
   id: string | number;
   name?: string;
   fullname?: string;
   email?: string;
+  password?: string;
   phoneNumber?: string;
   imageUrl?: string;
   joinedDate?: string;
@@ -15,7 +18,21 @@ export interface User {
   date?: string;
   accounts?: Account[];
   sub?: string;
+  roleId?: string;
+  deletedAt?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  Role?: {
+    id: string;
+    name: string;
+    isDefault: boolean;
+    type: string;
+    deletedAt?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  };
 }
+
 export type Account = {
   id: string;
   name?: string;
