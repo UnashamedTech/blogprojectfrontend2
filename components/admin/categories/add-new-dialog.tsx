@@ -11,58 +11,57 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import React from 'react';
+import { addCategory } from '@/actions/admin/admin';
 
-import { inviteUser } from '@/actions/admin/admin';
-
-interface InviteUserFormData {
-  name: string;
-  email: string;
+interface AddNewFormData {
+  CategoryName: string;
+  Description: string;
 }
-interface InviteUserDialogProps {
-  userName: string;
+
+interface AddNewDialogProps {
   triggerState: boolean;
   setTriggerState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function InviteUserDialog({
+export function AddNewDialog({
   triggerState,
   setTriggerState,
-}: InviteUserDialogProps) {
+}: AddNewDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState<InviteUserFormData>({
-    name: '',
-    email: '',
+  const [formData, setFormData] = useState<AddNewFormData>({
+    CategoryName: '',
+    Description: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const requestBody = {
-      name: formData.name,
-      email: formData.email,
-    };
-
     try {
-      const response = await inviteUser(requestBody);
+      const response = await addCategory({
+        CategoryName: formData.CategoryName,
+        Description: formData.Description
+      });
+
       if (response.error) {
-        toast.error('Failed to invite the user. Please try again later.');
+        toast.error('Failed to add category. Please try again later.');
+        return;
       }
-      toast.success(`Invitation sent to ${formData.email}`);
-      setFormData({ name: '', email: '' });
+
+      toast.success(`"${formData.CategoryName}" category added successfully`);
+      setFormData({ CategoryName: '', Description: '' });
       setIsOpen(false);
+      setTriggerState(!triggerState); 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.log(error)
-      toast.error('Failed to invite the user. Please try again later.');
+      toast.error('An unexpected error occurred. Please try again.');
     }
-    setTriggerState(!triggerState);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -74,40 +73,39 @@ export function InviteUserDialog({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Invite A user</DialogTitle>
+          <DialogTitle>Add New Category</DialogTitle>
           <DialogDescription>
-            Send an invitation link through their email
+            Add a new category for your blogs
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="categoryName">Category Name</Label>
             <Input
-              id="name"
-              name="name"
-              placeholder="Insert their name"
-              value={formData.name}
+              id="categoryName"
+              name="CategoryName"
+              placeholder="e.g., Faith"
+              value={formData.CategoryName}
               onChange={handleChange}
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Insert their email"
-              value={formData.email}
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              name="Description"
+              placeholder="Add a description for this category"
+              value={formData.Description}
               onChange={handleChange}
               required
             />
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#0F172A] hover:bg-[#1E293B]"
+            className="w-full bg-[#0CAF60] hover:bg-[#0CAF60]"
           >
-            invite
+            Add Category
           </Button>
         </form>
       </DialogContent>
