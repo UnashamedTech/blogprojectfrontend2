@@ -5,13 +5,17 @@ import {
   PostRequest,
   PatchRequest,
 } from '@/base-api/method';
-import { inviteUserProps, addCategoryProps,  updateCategoryProps } from '@/types/requests';
+import {
+  inviteUserProps,
+  addCategoryProps,
+  updateCategoryProps,
+} from '@/types/requests';
 const Url = {
   userDelete: `admin/user/user`,
   inviteUser: `admin/user/invite`,
   categoryDelete: `admin/user/user`,
-   addCategory: `admin/user/invite`,
-    updateCategory: `admin/category/update`,
+  addCategory: `admin/user/invite`,
+  updateCategory: `admin/category/update`,
 };
 
 export const deleteUser = async (id: string) => {
@@ -49,7 +53,11 @@ export const inviteUser = async (body: inviteUserProps) => {
 };
 
 export const addCategory = async (body: addCategoryProps) => {
-  const postRequest = new PostRequest(`${Url.addCategory}`, 'add-category', body);
+  const postRequest = new PostRequest(
+    `${Url.addCategory}`,
+    'add-category',
+    body
+  );
   const data = postRequest.postData();
   return data;
 };

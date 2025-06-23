@@ -8,6 +8,7 @@ import RecentUsers from '@/components/admin/dashboard/recent-users-table';
 import { getCookie } from 'cookies-next';
 
 export default function AdminView() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {

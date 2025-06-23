@@ -56,6 +56,8 @@ function AdminPage() {
 
   if (authorized === null) return <div>Loading...</div>;
 
+  console.log(token);
+
   if (!authorized) {
     return (
       <div className="w-full p-8 flex justify-center">
