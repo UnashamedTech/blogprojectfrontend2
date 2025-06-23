@@ -30,7 +30,7 @@ export default function AdminView() {
   return (
     <div className="flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-900 p-4">
       <div className="flex gap-4 flex-col mb-[16px]">
-        <h1 className="font-bold text-3xl">Hi {user.name || 'Admin'}</h1>
+        <h1 className="font-bold text-3xl">Hi {user?.name || 'Admin'}</h1>
         <p className="text-gray-500 text-[14px]">This is your Website report</p>
       </div>
       <div className="grid grid-cols-12 gap-4 max-w-6xl w-full">

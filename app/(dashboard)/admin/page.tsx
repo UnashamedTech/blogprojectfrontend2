@@ -68,6 +68,8 @@ function AdminPage() {
     );
   }
 
+  console.log(token);
+
   return <AdminView />;
 }
 
