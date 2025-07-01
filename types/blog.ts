@@ -4,8 +4,8 @@ export interface LayoutProps {
 }
 
 export interface Blogs {
-    id: string | number;
- Title?: string;
+  id: string | number;
+  Title?: string;
   Category?: string;
   location?: string;
   CreatedDate?: string;
@@ -14,4 +14,10 @@ export interface Blogs {
   CommentsAndLikes?: string | number;
 }
 
-export type SortField = 'Title' | 'Category' | 'CreatedDate' | 'location' | 'Comments' | 'Likes';
+export type SortField =
+  | 'Title'
+  | 'Category'
+  | 'CreatedDate'
+  | 'location'
+  | 'Comments'
+  | 'Likes';

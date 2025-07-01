@@ -4,10 +4,10 @@ export interface LayoutProps {
 }
 
 export interface Categories {
-    id: string | number;
- CategoryName?: string;
+  id: string | number;
+  CategoryName?: string;
   Description?: string;
   CreatedDate?: string;
 }
 
-export type SortField = 'CategoryName' | 'Description' | 'CreatedDate' ;
+export type SortField = 'CategoryName' | 'Description' | 'CreatedDate';
