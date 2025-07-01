@@ -54,6 +54,7 @@ export function InviteUserDialog({
       setIsOpen(false);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.log(error)
       toast.error('Failed to invite the user. Please try again later.');
     }
     setTriggerState(!triggerState);

@@ -17,6 +17,7 @@ import type { Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
 import { toast } from 'sonner';
+import { useCallback } from 'react';
 
 export function Header({ title }: { title: string }) {
   const [clientUser, setClientUser] = useState<Account | null>(null);
@@ -43,8 +44,7 @@ export function Header({ title }: { title: string }) {
     fetchClientUser();
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const profile = async () => {
+  const profile = useCallback(async () => {
     if (!clientUser) return;
 
     try {
@@ -63,7 +63,7 @@ export function Header({ title }: { title: string }) {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [clientUser]);
 
   const goToProfile = () => {
     const roleName =
