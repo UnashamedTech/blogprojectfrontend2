@@ -156,7 +156,6 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
     <div className="w-full">
       <h2 className="text-2xl font-bold mb-6">Responses ({comments.length})</h2>
 
-      {/* Comment input */}
       <div className="mb-8 bg-gray-100 p-4 rounded-lg">
         <Textarea
           placeholder="What are your thoughts?"

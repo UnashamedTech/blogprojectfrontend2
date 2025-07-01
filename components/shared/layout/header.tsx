@@ -88,10 +88,7 @@ export function Header({ title }: { title: string }) {
     <header className="flex h-14 items-center justify-between border-b px-4">
       <h1 className="text-base font-normal">{title}</h1>
       <div className="flex items-center space-x-4">
-        <button
-          title="notification"
-          className="text-gray-600 hover:text-gray-900"
-        >
+        <button title="notify" className="text-gray-600 hover:text-gray-900">
           <FiBell className="h-5 w-5" />
         </button>
         <Dialog>
