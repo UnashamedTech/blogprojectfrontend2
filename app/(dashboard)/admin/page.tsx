@@ -7,7 +7,9 @@ import { getCookie } from 'cookies-next';
 import { setAuthCookie } from '@/actions/auth/auth';
 import { useSearchParams } from 'next/navigation';
 
-function AdminPage() {
+import { Suspense } from 'react';
+
+function AdminPageContent() {
   const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const searchParams = useSearchParams();
@@ -69,6 +71,14 @@ function AdminPage() {
   console.log(token);
 
   return <AdminView />;
+}
+
+function AdminPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AdminPageContent />
+    </Suspense>
+  );
 }
 
 export default AdminPage;
