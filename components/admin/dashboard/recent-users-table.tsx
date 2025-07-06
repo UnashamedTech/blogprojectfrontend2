@@ -84,7 +84,7 @@ const RecentUsers: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 p-4 bg-secondary dark:bg-gray-900">
+    <div className="flex-1 bg-secondary dark:bg-gray-900 w-full">
       <div className="space-y-6 bg-white p-6 rounded-lg">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Recent Users</h1>

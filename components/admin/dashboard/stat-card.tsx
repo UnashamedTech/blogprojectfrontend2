@@ -39,7 +39,7 @@ function StatsCard({ title, value, change, icon }: StatsCardProps) {
 
 export function StatsCards() {
   return (
-    <div className="bg-white dark:bg-gray-950 p-4 rounded-lg shadow-sm max-w-xs h-[425px]">
+    <div className="bg-white dark:bg-gray-950 p-4 rounded-lg shadow-sm max-w-full h-full">
       <div className="grid gap-4 grid-cols-1">
         <StatsCard
           title="Total Users"

@@ -81,13 +81,13 @@ export function CategoryChart() {
   }, [totalBlogs]);
 
   return (
-    <Card className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm">
+    <Card className="bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm h-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg font-medium">Categories</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="relative flex justify-center mb-4">
-          <canvas ref={chartRef} height={180} />
+          <canvas ref={chartRef} height={120} width={120} />
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
             <div className="text-2xl font-bold">{totalBlogs}</div>
             <div className="text-xs text-gray-500">Total Blog</div>
