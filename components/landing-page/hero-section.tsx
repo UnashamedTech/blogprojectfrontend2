@@ -24,12 +24,15 @@ export default function HeroSection() {
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-3 font-['EBGaramond']">
             Welcome to My Journey
           </h1>
-          <p className="px-3 text-base text-center  md:text-lg lg:text-2xl text-white mb-2 ml-4 font-bold font-['EBGaramond']">
+          <p className="px-3 text-base text-center md:text-lg lg:text-2xl text-white mb-2 ml-4 font-bold font-['EBGaramond']">
             Join me as I share my story, experiences, and mission to make a
             positive impact in the world.
           </p>
-          <Link href="/support" className="flex items-center justify-center">
-            <Button className="bg-white text-xl text-black hover:bg-black cursor-pointer font-bold p-5 rounded-sm mt-2 font-['EBGaramond'] hover:text-white">
+          <Link
+            href="/user/support"
+            className="flex items-center justify-center"
+          >
+            <Button className="bg-white text-base md:text-xl text-black hover:bg-black cursor-pointer font-bold p-5 rounded-sm mt-2 font-['EBGaramond'] hover:text-white">
               Support me
             </Button>
           </Link>
