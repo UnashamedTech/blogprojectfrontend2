@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, EB_Garamond } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/landing-page/theme-provider';
 
@@ -12,6 +12,13 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-serif',
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '700'], // adjust weights as needed
+  variable: '--font-eb-garamond',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -27,7 +34,9 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+      <body
+        className={`${inter.variable}  ${ebGaramond.variable} ${playfair.variable} font-sans`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

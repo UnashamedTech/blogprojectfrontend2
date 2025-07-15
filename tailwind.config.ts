@@ -22,7 +22,7 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)'],
         serif: ['var(--font-serif)'],
-        'eb-garamond': ['var(--font-eb-garamond)'],
+        garamond: ['var(--font-eb-garamond)', 'serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
