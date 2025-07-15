@@ -60,8 +60,8 @@ function AdminPageContent() {
 
   if (!authorized) {
     return (
-      <div className="w-full p-8 flex justify-center">
-        <div className="max-w-md w-full">
+      <div className="w-full h-full p-8 flex justify-center">
+        <div className="flex justify-center items-center w-fit ">
           <LoginPageCard />
         </div>
       </div>

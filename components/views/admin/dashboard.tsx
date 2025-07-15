@@ -28,23 +28,23 @@ export default function AdminView() {
   }
 
   return (
-    <div className="flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-900 p-4">
-      <div className="flex gap-4 flex-col mb-[16px]">
+    <div className="flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-900 p-8 w-full">
+      <div className="flex gap-1 flex-col mb-[16px]">
         <h1 className="font-bold text-3xl">Hi {user?.name || 'Admin'}</h1>
         <p className="text-gray-500 text-[14px]">This is your Website report</p>
       </div>
-      <div className="grid grid-cols-12 gap-4 max-w-6xl w-full">
-        <div className="col-span-12 md:col-span-3 h-[382px]">
+      <div className="grid grid-cols-10 gap-3 w-full ">
+        <div className="md:col-span-2 h-full">
           <StatsCards />
         </div>
-        <div className="col-span-12 md:col-span-3">
+        <div className="md:col-span-2 h-full">
           <CategoryChart />
         </div>
-        <div className="col-span-12 md:col-span-6">
+        <div className="md:col-span-6">
           <PerformanceChart />
         </div>
       </div>
-      <div className="container mx-auto p-6">
+      <div className="container w-full  mt-4">
         <RecentUsers />
       </div>
     </div>

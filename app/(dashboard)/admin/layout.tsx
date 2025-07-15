@@ -21,8 +21,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <AdminLayout title={lastSegment.toLocaleUpperCase()}>
-      <div className="w-full bg-secondary p-0 dark:bg-gray-900">
-        <div className="flex mx-auto">{children}</div>
+      <div className="w-full bg-secondary h-full dark:bg-gray-900">
+        <div className="flex h-full">{children}</div>
         <Toaster />
       </div>
     </AdminLayout>

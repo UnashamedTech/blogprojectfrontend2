@@ -41,9 +41,9 @@ const LoginPageCard = () => {
   };
 
   return (
-    <Card className="flex-1 flex items-center justify-center flex-col gap-6">
-      <CardHeader className="flex flex-col items-center pb-0">
-        <CardTitle className="font-bold text-3xl tracking-[-1px] mb-[-5px]">
+    <Card className="flex-1 flex items-center justify-center flex-col gap-6 w-fit ">
+      <CardHeader className="flex w-full flex-col items-center pb-0 gap-4">
+        <CardTitle className="font-bold text-3xl tracking-[-1px] mb-[-5px] w-fit">
           Login
         </CardTitle>
         <CardDescription className="text-slate-500 font-normal text-base">
