@@ -29,7 +29,7 @@ export function Sidebar() {
   return (
     <div
       className={cn(
-        'flex h-screen flex-col border-r bg-white transition-all duration-300',
+        'flex flex-col h-dvh border-r border-4 bg-white transition-all duration-300 sticy',
         isCollapsed ? 'w-[60px]' : 'w-[240px]'
       )}
     >
