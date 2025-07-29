@@ -1,25 +1,24 @@
 import LoginPageCard from '@/components/login-page/login-page-card';
 import { User_Info } from '@/types/user';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
 const LoginPage = async () => {
-  const cookieStore = await cookies();
-  const userProfile = cookieStore.get('user-profile')?.value;
-
+  const cookieStore = cookies();
+  const userProfile = (await cookieStore).get('user-profile')?.value;
   const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
   if (user) {
-    switch (user.role) {
-      case 'OWNER':
-        redirect('/admin');
-        break;
-      case 'USER':
-        redirect('/user');
-        break;
-      default:
-        redirect('/log-in');
-        break;
+    const role = user.roles?.[0]?.toUpperCase();
+
+    if (typeof window !== 'undefined') {
+      if (role === 'OWNER') {
+        window.location.href = '/admin';
+      } else if (role === 'USER') {
+        window.location.href = '/user/blogs';
+      } else {
+        window.location.href = '/log-in';
+      }
+      return null;
     }
   }
 

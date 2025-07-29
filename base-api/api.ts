@@ -14,8 +14,11 @@ const apiCall = async ({
   method = 'GET',
   data = [],
   cache_type = 'no-cache',
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onStart,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSuccess,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onError,
   tag,
 }: {

@@ -24,7 +24,7 @@ function AdminPageContent() {
 
       try {
         const profile = JSON.parse(userProfileCookie);
-        if (profile.role === 'OWNER') {
+        if (profile.role && profile.role.toUpperCase() === 'OWNER') {
           setAuthorized(true);
         } else {
           setAuthorized(false);
@@ -40,11 +40,11 @@ function AdminPageContent() {
 
       if (tokenFromUrl) {
         setToken(tokenFromUrl);
-
         const response = await setAuthCookie(tokenFromUrl);
-
         if (response === true) {
-          checkAuthorization();
+          if (typeof window !== 'undefined') {
+            window.location.href = '/admin';
+          }
         } else {
           setAuthorized(false);
         }

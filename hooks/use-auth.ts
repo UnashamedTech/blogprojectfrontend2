@@ -8,38 +8,34 @@ import { User_Info, Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 
 export function useAuth() {
-  const [authorized, setAuthorized] = useState<boolean | null>(null);
   const [user, setUser] = useState<User_Info | null>(null);
   const [loading, setLoading] = useState(true);
-  const searchParams = useSearchParams();
-
-  const checkAuth = async () => {
-    try {
-      const accountData = await userProfile();
-      if (!accountData) {
-        throw new Error('Not authenticated');
-      }
-      const userInfo: User_Info = {
-        userName: accountData.name || accountData.email || '',
-        roleId: accountData.role?.id || null,
-        role: accountData.role?.name || null,
-        imageUrl: accountData.imageUrl || null,
-        userId: accountData.userId || null,
-        token: null,
-      };
-      setUser(userInfo);
-      return true;
-    } catch (error) {
-      setUser(null);
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    checkAuth();
+    // Only fetch user info for display, not for auth state
+    (async () => {
+      try {
+        const accountData = await userProfile();
+        if (accountData) {
+          const userInfo: User_Info = {
+            userName: accountData.name || accountData.email || '',
+            roleId: accountData.role?.id || null,
+            role: accountData.role?.name || null,
+            imageUrl: accountData.imageUrl || null,
+            userId: accountData.userId || null,
+            token: null,
+          };
+          setUser(userInfo);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, []);
 
-  return { user, loading, checkAuth };
+  return { user, loading };
 }
