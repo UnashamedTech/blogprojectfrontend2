@@ -19,10 +19,10 @@ export async function setAuthCookie(userData: User_Info) {
   cookieStore.set({
     name: 'user-profile',
     value: JSON.stringify({
-      id: userData.userId,
-      name: userData.userName,
+      id: userData.sub,
+      name: userData.name,
       email: userData.email,
-      role: userData.roles,
+      roles: userData.roles,
       imageUrl: userData.imageUrl,
     }),
     maxAge: 60 * 60 * 24,
@@ -40,11 +40,11 @@ export async function googleAuthCallback(token: string) {
 
   await setAuthCookie({
     email: decoded.email || '',
-    userId: decoded.userId || null,
-    userName: decoded.userName || 'Guest',
+    sub: decoded.sub || null,
+    name: decoded.name || 'Guest',
     imageUrl: decoded.imageUrl || null,
     token,
-    roles: decoded.roles || 'USER', // Defaults to 'USER' if not specified
+    roles: decoded.roles || 'null', // Defaults to 'USER' if not specified
   });
  console.log("User profile set in cookies:", decoded.roles);
   return { success: true };
