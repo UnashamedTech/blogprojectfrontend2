@@ -47,11 +47,11 @@ export type Account = {
 
 export interface User_Info {
   email: string;
-  userId: string | null;
-  userName: string;
+  sub: string | null;
+  name: string;
   imageUrl: string | null;
   token: string | null;
-  roles: string[];
+  roles: string[] | string ; 
 }
 
 export type AccountInfo = {
