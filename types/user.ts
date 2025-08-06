@@ -51,7 +51,7 @@ export interface User_Info {
   name: string;
   imageUrl: string | null;
   token: string | null;
-  roles: string[] | string ; 
+  role:string ; 
 }
 
 export type AccountInfo = {
