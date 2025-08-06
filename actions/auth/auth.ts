@@ -22,7 +22,7 @@ export async function setAuthCookie(userData: User_Info) {
       id: userData.sub,
       name: userData.name,
       email: userData.email,
-      roles: userData.roles,
+      role: userData.role,
       imageUrl: userData.imageUrl,
     }),
     maxAge: 60 * 60 * 24,
@@ -44,9 +44,9 @@ export async function googleAuthCallback(token: string) {
     name: decoded.name || 'Guest',
     imageUrl: decoded.imageUrl || null,
     token,
-    roles: decoded.roles || 'null', // Defaults to 'USER' if not specified
+    role: decoded.role || 'null', 
   });
- console.log("User profile set in cookies:", decoded.roles);
+ console.log("User profile set in cookies:", decoded.role);
   return { success: true };
  
 }

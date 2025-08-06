@@ -1,3 +1,5 @@
+'use server';
+
 import LoginPageCard from '@/components/login-page/login-page-card';
 import { User_Info } from '@/types/user';
 import { cookies } from 'next/headers';
@@ -10,9 +12,7 @@ const LoginPage = async () => {
   const user: User_Info | null = userProfile ? JSON.parse(userProfile) : null;
 
   if (user) {
-    const role =user.roles;
-    console.log("User profile:", user);
-    console.log("User role:", role);
+    const role =user.role;
 
 if (role === 'OWNER') {
     redirect('/admin');
