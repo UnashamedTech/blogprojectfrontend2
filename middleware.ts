@@ -10,20 +10,26 @@ export async function middleware(req: NextRequest) {
   const adminPath = "/admin";
   const userPath = "/user/blogs";
 
-  // ⚠️ Skip checks if the token is in URL (let frontend handle saving it)
   if (tokenFromUrl) {
     return NextResponse.next();
   }
 
-  // ⏱️ Handle expired cookie token
   if (tokenFromCookie) {
     try {
       const decoded = JSON.parse(atob(tokenFromCookie.split('.')[1]));
       const now = Math.floor(Date.now() / 1000);
+
       if (decoded.exp < now) {
         await logoutAction();
         return NextResponse.redirect(new URL("/log-in", req.url));
       }
+
+      const role = decoded.role?.toUpperCase();
+
+      if (pathname.startsWith(adminPath) && role === "USER") {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+
     } catch (err) {
       console.error("Invalid JWT:", err);
       await logoutAction();
@@ -31,7 +37,6 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 🔐 If accessing protected route without valid token
   const isProtectedRoute = pathname.startsWith(adminPath) || pathname.startsWith(userPath);
 
   if (isProtectedRoute && !tokenFromCookie) {

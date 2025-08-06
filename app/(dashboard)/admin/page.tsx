@@ -1,75 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import AdminView from '@/components/views/admin/dashboard';
-import LoginPageCard from '@/components/login-page/login-page-card';
-import { getCookie } from 'cookies-next';
-import { setAuthCookie } from '@/actions/auth/auth';
-import { useSearchParams } from 'next/navigation';
-
 import { Suspense } from 'react';
+import AdminView from '@/components/views/admin/dashboard';
 
 function AdminPageContent() {
-  const [authorized, setAuthorized] = useState<boolean | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const checkAuthorization = () => {
-      const userProfileCookie = getCookie('user-profile') as string | undefined;
-      if (!userProfileCookie) {
-        setAuthorized(false);
-        return;
-      }
-
-      try {
-        const profile = JSON.parse(userProfileCookie);
-        if (profile.role && profile.role.toUpperCase() === 'OWNER') {
-          setAuthorized(true);
-        } else {
-          setAuthorized(false);
-        }
-      } catch (err) {
-        console.error('Failed to parse user profile:', err);
-        setAuthorized(false);
-      }
-    };
-
-    const initialize = async () => {
-      const tokenFromUrl = searchParams?.get('token');
-
-      if (tokenFromUrl) {
-        setToken(tokenFromUrl);
-        const response = await setAuthCookie(tokenFromUrl);
-        if (response === true) {
-          if (typeof window !== 'undefined') {
-            window.location.href = '/admin';
-          }
-        } else {
-          setAuthorized(false);
-        }
-      } else {
-        checkAuthorization();
-      }
-    };
-
-    initialize();
-  }, [searchParams]);
-
-  if (authorized === null) return <div>Loading...</div>;
-
-  if (!authorized) {
-    return (
-      <div className="w-full h-full p-8 flex justify-center">
-        <div className="flex justify-center items-center w-fit ">
-          <LoginPageCard />
-        </div>
-      </div>
-    );
-  }
-
-  console.log(token);
-
   return <AdminView />;
 }
 
