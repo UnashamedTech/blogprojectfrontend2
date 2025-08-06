@@ -95,7 +95,7 @@ export default function BlogSection() {
                 </p>
 
                 <Link
-                  href={`/blogs/${post.id}`}
+                  href={`/user/blogs/${post.id}`}
                   className="flex pb-2 items-center text-black font-bold hover:underline mb-6 font-['EBGaramond']"
                 >
                   <p> Continue Reading </p>{' '}
@@ -120,7 +120,7 @@ export default function BlogSection() {
 
         <div className="flex justify-center mt-12">
           <Link
-            href="/blogs"
+            href="/user/blogs"
             className="inline-flex items-center bg-black text-white px-6 py-3 rounded font-medium hover:bg-gray-800 transition-colors font-['EBGaramond']"
           >
             Read More <ArrowRight className="ml-2 h-4 w-4" />

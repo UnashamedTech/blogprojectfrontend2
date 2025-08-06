@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from './accountDialog';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 import { fetchUserProfile } from '@/actions/shared/user-profile';
@@ -22,12 +21,13 @@ import { useCallback } from 'react';
 export function Header({ title }: { title: string }) {
   const [clientUser, setClientUser] = useState<Account | null>(null);
   const [profileData, setProfileData] = useState<Account | null>(null);
-  const router = useRouter();
 
   const logOut = async () => {
     const { removeUserProfile } = await import('@/actions/auth/auth');
-    removeUserProfile();
-    router.push('/log-in');
+    await removeUserProfile();
+    if (typeof window !== 'undefined') {
+      window.location.href = '/log-in';
+    }
   };
 
   useEffect(() => {
@@ -66,15 +66,21 @@ export function Header({ title }: { title: string }) {
   }, [clientUser]);
 
   const goToProfile = () => {
-    const roleName =
-      typeof clientUser?.role === 'string'
-        ? clientUser.role
-        : clientUser?.role?.name;
+    let roleName: string | undefined = undefined;
+    if (typeof clientUser?.role === 'string') {
+      roleName = String(clientUser.role).toUpperCase();
+    } else if (clientUser?.role && typeof clientUser.role === 'object' && 'name' in clientUser.role && typeof clientUser.role.name === 'string') {
+      roleName = clientUser.role.name.toUpperCase();
+    }
 
-    if (roleName === 'Owner') {
-      router.push('/admin/get-started');
-    } else if (roleName === 'User') {
-      router.push('/user/get-started');
+    if (roleName === 'OWNER') {
+      if (typeof window !== 'undefined') {
+        window.location.href = '/admin/get-started';
+      }
+    } else if (roleName === 'USER') {
+      if (typeof window !== 'undefined') {
+        window.location.href = '/user/get-started';
+      }
     }
   };
 

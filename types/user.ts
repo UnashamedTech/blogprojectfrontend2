@@ -46,12 +46,18 @@ export type Account = {
 };
 
 export interface User_Info {
-  userId: string | null;
-  userName: string | null;
-  roleId: string | null;
-  role: string | null;
+  email: string;
+  sub: string | null;
+  name: string;
   imageUrl: string | null;
   token: string | null;
+  role: string;
 }
+
+export type AccountInfo = {
+  id: string;
+  name: string;
+  role: string | null;
+};
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';

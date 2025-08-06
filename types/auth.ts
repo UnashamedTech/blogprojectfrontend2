@@ -1,13 +1,9 @@
 export interface DecodedToken {
-  name?: string;
-  email?: string;
-  id: string;
-  userId?: string;
+  sub: string;
+  email: string;
   imageUrl?: string;
-  role?: {
-    id: string | null;
-    name: string | null;
-  };
-  roles?: string | string[];
-  [key: string]: any;
+  name: string;
+  roles: string[];
+  iat: number;
+  exp: number;
 }

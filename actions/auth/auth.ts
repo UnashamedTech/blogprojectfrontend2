@@ -1,32 +1,17 @@
 'use server';
 
+import type { User_Info } from '@/types/user';
 import { cookies } from 'next/headers';
 import { decodeToken } from '@/lib/utils';
-import type { User_Info } from '@/types/user';
 
-export async function setAuthCookie(token: string) {
-  const decoded = decodeToken(token);
-
-  if (!decoded || !decoded.roles || decoded.roles.length === 0) {
-    throw new Error('Invalid token or no roles found');
-  }
-
-  const userData: User_Info = {
-    userId: decoded.sub ?? null,
-    userName: decoded.email ?? null,
-    roleId: null,
-    role: decoded.roles[0],
-    imageUrl: decoded.imageUrl ?? null,
-    token,
-  };
-
+export async function setAuthCookie(userData: User_Info) {
   const cookieStore = await cookies();
 
   cookieStore.set({
     name: 'auth-token',
-    value: userData.token as string,
+    value: userData.token ?? '',
     httpOnly: true,
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60 * 24, // 1 day
     path: '/',
     sameSite: 'lax',
   });
@@ -34,18 +19,35 @@ export async function setAuthCookie(token: string) {
   cookieStore.set({
     name: 'user-profile',
     value: JSON.stringify({
-      id: userData.userId,
-      name: userData.userName,
+      id: userData.sub,
+      name: userData.name,
+      email: userData.email,
       role: userData.role,
       imageUrl: userData.imageUrl,
-      userId: userData.userId,
     }),
     maxAge: 60 * 60 * 24,
     path: '/',
     sameSite: 'lax',
   });
+}
 
-  return true;
+export async function googleAuthCallback(token: string) {
+  const decoded = decodeToken(token) as User_Info | null;
+  console.log('Decoded token:', decoded);
+  if (!decoded) {
+    return { success: false };
+  }
+
+  await setAuthCookie({
+    email: decoded.email || '',
+    sub: decoded.sub || null,
+    name: decoded.name || 'Guest',
+    imageUrl: decoded.imageUrl || null,
+    token,
+    role: decoded.role || 'null',
+  });
+  console.log('User profile set in cookies:', decoded.role);
+  return { success: true };
 }
 
 export async function removeUserProfile() {
