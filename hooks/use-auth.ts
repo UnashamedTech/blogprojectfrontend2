@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { User_Info} from '@/types/user';
+import { User_Info } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 
 export function useAuth() {
@@ -20,13 +20,13 @@ export function useAuth() {
             imageUrl: accountData.imageUrl || null,
             sub: accountData.userId || null,
             token: null,
-            email: ''
+            email: '',
           };
           setUser(userInfo);
         } else {
           setUser(null);
         }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setUser(null);
       } finally {
