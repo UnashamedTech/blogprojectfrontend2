@@ -51,7 +51,7 @@ export interface User_Info {
   name: string;
   imageUrl: string | null;
   token: string | null;
-  role:string ; 
+  role: string;
 }
 
 export type AccountInfo = {
@@ -59,6 +59,5 @@ export type AccountInfo = {
   name: string;
   role: string | null;
 };
-
 
 export type SortField = 'name' | 'email' | 'joinedDate' | 'location';

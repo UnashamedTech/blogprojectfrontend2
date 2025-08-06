@@ -33,7 +33,7 @@ export async function setAuthCookie(userData: User_Info) {
 
 export async function googleAuthCallback(token: string) {
   const decoded = decodeToken(token) as User_Info | null;
-  console.log("Decoded token:", decoded);
+  console.log('Decoded token:', decoded);
   if (!decoded) {
     return { success: false };
   }
@@ -44,11 +44,10 @@ export async function googleAuthCallback(token: string) {
     name: decoded.name || 'Guest',
     imageUrl: decoded.imageUrl || null,
     token,
-    role: decoded.role || 'null', 
+    role: decoded.role || 'null',
   });
- console.log("User profile set in cookies:", decoded.role);
+  console.log('User profile set in cookies:', decoded.role);
   return { success: true };
- 
 }
 
 export async function removeUserProfile() {
