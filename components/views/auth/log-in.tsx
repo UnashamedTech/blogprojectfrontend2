@@ -24,7 +24,7 @@ if (role === 'OWNER') {
   }
 
   return (
-    <div className="w-screen h-screen flex">
+    <div className="w-full flex h-dvh">
       <LoginPageCard />
     </div>
   );

@@ -10,11 +10,11 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ children, title }: AdminLayoutProps) {
   return (
-    <div className="flex max-h-screen">
+    <div className='flex'>
       <Sidebar />
       <div className="flex w-full flex-1 flex-col">
         <Header title={title} />
-        <main className="w-full overflow-auto">{children}</main>
+        <main className="w-full h-full overflow-auto">{children}</main>
         <Toaster />
       </div>
     </div>
