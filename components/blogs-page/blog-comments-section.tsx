@@ -64,8 +64,8 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
 
     const newComment: Comment = {
       id: Date.now().toString(),
-      userId: user?.userId || '',
-      userName: user?.userName || 'Anonymous',
+      userId: user?.sub || '',
+      userName: user?.name || 'Anonymous',
       userImage: user?.imageUrl || '/placeholder.svg',
       content: comment,
       createdAt: new Date(),
@@ -84,8 +84,8 @@ export default function BlogComments({ blogId }: BlogCommentsProps) {
 
     const newReply: Reply = {
       id: Date.now().toString(),
-      userId: user?.userId || '',
-      userName: user?.userName || 'Anonymous',
+      userId: user?.sub || '',
+      userName: user?.name || 'Anonymous',
       userImage: user?.imageUrl || '/placeholder.svg',
       content: replyContent,
       createdAt: new Date(),
