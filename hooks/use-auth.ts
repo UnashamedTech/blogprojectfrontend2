@@ -1,10 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getCookie } from 'cookies-next';
-import { useSearchParams } from 'next/navigation';
-import { setAuthCookie } from '@/actions/auth/auth';
-import { User_Info, Account } from '@/types/user';
+import { User_Info} from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
 
 export function useAuth() {
@@ -18,17 +15,18 @@ export function useAuth() {
         const accountData = await userProfile();
         if (accountData) {
           const userInfo: User_Info = {
-            userName: accountData.name || accountData.email || '',
-            roleId: accountData.role?.id || null,
-            role: accountData.role?.name || null,
+            name: accountData.name || accountData.email || '',
+            role: accountData.role?.name || '',
             imageUrl: accountData.imageUrl || null,
-            userId: accountData.userId || null,
+            sub: accountData.userId || null,
             token: null,
+            email: ''
           };
           setUser(userInfo);
         } else {
           setUser(null);
         }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         setUser(null);
       } finally {
