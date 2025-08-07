@@ -16,7 +16,7 @@ export function useAuth() {
         if (accountData) {
           const userInfo: User_Info = {
             name: accountData.name || accountData.email || '',
-            role: accountData.role?.name || '',
+            role: accountData.role || '',
             imageUrl: accountData.imageUrl || null,
             sub: accountData.userId || null,
             token: null,

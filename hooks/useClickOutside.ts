@@ -1,14 +1,17 @@
-// src/hooks/useClickOutside.ts
-import { useEffect } from 'react';
+import { RefObject, useEffect } from 'react';
 
-export function useClickOutside(
-  ref: React.RefObject<HTMLElement>,
+export function useClickOutside<T extends HTMLElement>(
+  ref: RefObject<T | null>,
   handler: () => void
 ) {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
-      const el = ref?.current;
-      if (!el || el.contains(event.target as Node)) return;
+      const target = event.target as Node;
+
+      if (!ref.current || ref.current.contains(target)) {
+        return;
+      }
+
       handler();
     };
 

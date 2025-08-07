@@ -1,7 +1,8 @@
 'use client';
 
 import { FiBell } from 'react-icons/fi';
-import { LuUser, LuLogOut } from 'react-icons/lu';
+import { LuLogOut } from 'react-icons/lu';
+import { LayoutDashboard } from 'lucide-react'; 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Dialog,
@@ -11,12 +12,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './accountDialog';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import type { Account } from '@/types/user';
 import { userProfile } from '@/actions/auth/login';
-import { fetchUserProfile } from '@/actions/shared/user-profile';
+import { fetchAdminProfile } from '@/actions/shared/user-profile';
 import { toast } from 'sonner';
-import { useCallback } from 'react';
 
 export function Header({ title }: { title: string }) {
   const [clientUser, setClientUser] = useState<Account | null>(null);
@@ -37,7 +37,7 @@ export function Header({ title }: { title: string }) {
         setClientUser(userAccount);
       } catch (error) {
         console.log(error);
-        toast.error('Failed to fetch user profile. Please try again later.');
+        toast.error('Failed to fetch admin profile. Please try again later.');
         setClientUser(null);
       }
     };
@@ -48,39 +48,25 @@ export function Header({ title }: { title: string }) {
     if (!clientUser) return;
 
     try {
-      if (!clientUser.userId || !clientUser.id) {
+      if ( !clientUser.id) {
         throw new Error('User ID or Client ID is missing.');
       }
 
-      const response = await fetchUserProfile(clientUser.userId, clientUser.id);
+      const response = await fetchAdminProfile( clientUser.id);
       if (response.error) {
         toast.error(response.error.description);
         throw new Error('Failed to fetch profile.');
       }
 
       setProfileData(response);
-      toast.success('Profile fetched successfully.');
     } catch (error) {
       console.error(error);
     }
   }, [clientUser]);
 
-  const goToProfile = () => {
-    let roleName: string | undefined = undefined;
-    if (typeof clientUser?.role === 'string') {
-      roleName = String(clientUser.role).toUpperCase();
-    } else if (clientUser?.role && typeof clientUser.role === 'object' && 'name' in clientUser.role && typeof clientUser.role.name === 'string') {
-      roleName = clientUser.role.name.toUpperCase();
-    }
-
-    if (roleName === 'OWNER') {
-      if (typeof window !== 'undefined') {
-        window.location.href = '/admin/get-started';
-      }
-    } else if (roleName === 'USER') {
-      if (typeof window !== 'undefined') {
-        window.location.href = '/user/get-started';
-      }
+  const goToDashboard = () => {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
     }
   };
 
@@ -101,7 +87,7 @@ export function Header({ title }: { title: string }) {
           <DialogTrigger>
             <Avatar className="w-8 h-8 cursor-pointer">
               <AvatarImage
-                src={profileData?.imageUrl || '/assets/avatars/woman1.png'}
+                src={profileData?.imageUrl || '/images/placeholder.jpg'}
                 className="w-full h-full object-cover"
               />
               <AvatarFallback className="w-full h-full flex items-center justify-center text-xl">
@@ -109,27 +95,27 @@ export function Header({ title }: { title: string }) {
               </AvatarFallback>
             </Avatar>
           </DialogTrigger>
-          <DialogContent className="rounded-[6px] pt-4 pb-0 px-0 w-min translate-x-0 translate-y-0 top-12 left-auto right-2.5 ">
-            <DialogHeader className="space-y-0 px-4">
-              <DialogTitle className="text-start text-lg">
-                {profileData?.name}
+          <DialogContent className="rounded-[6px] pt-4 pb-0 px-0 w-72 translate-x-0 translate-y-0 top-12 left-auto right-2.5 shadow-lg">
+            <DialogHeader className="px-4 pb-2">
+              <DialogTitle className="text-left text-base font-semibold">
+                {profileData?.name || '[user name]'}
               </DialogTitle>
-              <DialogDescription className="text-base">
-                {profileData?.email}
+              <DialogDescription className="text-left text-sm text-muted-foreground">
+                {profileData?.email || '[useremail@gmail.com]'}
               </DialogDescription>
             </DialogHeader>
-            <div className="flex flex-col">
+            <div className="flex flex-col border-t">
               <div
-                onClick={goToProfile}
-                className="flex gap-2 text-lg py-2 border border-y-slate-200 border-x-0 px-4 cursor-pointer hover:bg-slate-50"
+                onClick={goToDashboard}
+                className="flex gap-2 items-center text-base py-2 px-4 cursor-pointer hover:bg-slate-50"
               >
-                <LuUser size={25} /> Profile
+                <LayoutDashboard size={20} /> Your Dashboard
               </div>
               <div
-                className="flex gap-2 text-lg py-2 px-4 cursor-pointer hover:bg-slate-50"
                 onClick={logOut}
+                className="flex gap-2 items-center text-base py-2 px-4 cursor-pointer hover:bg-slate-50"
               >
-                <LuLogOut size={25} /> Logout
+                <LuLogOut size={20} /> Logout
               </div>
             </div>
           </DialogContent>
