@@ -37,10 +37,7 @@ export type Account = {
   id: string;
   name?: string;
   email?: string;
-  role?: {
-    id: string;
-    name: string;
-  };
+  role?: string;
   imageUrl?: string;
   userId?: string;
 };
