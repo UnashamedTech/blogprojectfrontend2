@@ -6,7 +6,7 @@ const Url = {
   adminProfile: `admin/user/user`,
 };
 
-export const fetchAdminProfile = async ( id: string) => {
+export const fetchAdminProfile = async (id: string) => {
   try {
     const getRequest = new GetRequest(
       `${Url.adminProfile}/${id}`,
@@ -14,9 +14,8 @@ export const fetchAdminProfile = async ( id: string) => {
     );
     const data = await getRequest.getData();
     return data;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     throw new Error('Failed to fetch admin profile.');
   }
 };
-
