@@ -4,11 +4,11 @@ export interface inviteUserProps {
 }
 
 export interface addCategoryProps {
-  CategoryName: string;
-  Description: string;
+  title: string;
+  description: string;
 }
 
 export type updateCategoryProps = {
-  CategoryName: string;
-  Description: string;
+  title: string;
+  description: string;
 };

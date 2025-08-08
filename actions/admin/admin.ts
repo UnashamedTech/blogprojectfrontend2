@@ -13,9 +13,9 @@ import {
 const Url = {
   userDelete: `admin/user/user`,
   inviteUser: `admin/user/invite`,
-  categoryDelete: `admin/user/user`,
-  addCategory: `admin/user/invite`,
-  updateCategory: `admin/category/update`,
+  categoryDelete: `categories`,
+  addCategory: `categories`,
+  updateCategory: `categories`,
   blogDelete: `admin/blog/delete`,
 };
 

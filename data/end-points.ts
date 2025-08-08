@@ -4,6 +4,6 @@ export const endPoints = {
   adminUser: 'admin/user',
   allUsers: 'admin/user/all',
   userProfile: 'admin/user',
-  categories: 'admin/category',
+  categories: 'categories',
   blogs: 'admin/blog',
 };
