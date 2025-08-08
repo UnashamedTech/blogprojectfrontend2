@@ -44,7 +44,6 @@ export const addCategory = async (body: addCategoryProps) => {
   return data;
 };
 
-
 export const deleteCategory = async (id: string) => {
   const deleteRequest = new DeleteRequest(
     `${Url.categoryDelete}/${id}`,

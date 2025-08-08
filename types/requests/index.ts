@@ -10,5 +10,5 @@ export interface addCategoryProps {
 
 export type updateCategoryProps = {
   title: string;
-description: string;
+  description: string;
 };
