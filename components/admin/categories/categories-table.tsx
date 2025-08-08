@@ -22,17 +22,17 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 const columns: Column<Categories>[] = [
-  { key: 'CategoryName', header: 'Category Name' },
-  { key: 'Description', header: 'Description' },
+  { key: 'title', header: 'Category Name' },
+  { key: 'description', header: 'Description' },
   {
-    key: 'CreatedDate',
+    key: 'createdAt',
     header: 'Created Date',
     render: (category: Categories) =>
-      category.CreatedDate ? new Date(category.CreatedDate).toLocaleDateString() : '-',
+      category.createdAt ? new Date(category.createdAt).toLocaleDateString() : '-',
   },
 ];
 
-const searchFields: (keyof Categories)[] = ['CategoryName', 'CreatedDate'];
+const searchFields: (keyof Categories)[] = ['title', 'createdAt'];
 
 const CategoriesTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +40,7 @@ const CategoriesTable: React.FC = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Categories | null>(null);
   const [editFormData, setEditFormData] = useState({
-    categoryName: '',
+    title: '',
     description: '',
   });
 
@@ -64,8 +64,8 @@ const CategoriesTable: React.FC = () => {
   const handleEdit = (category: Categories) => {
     setSelectedCategory(category);
     setEditFormData({
-      categoryName: category.CategoryName || '',
-      description: category.Description || '',
+      title: category.title || '',
+      description: category.description || '',
     });
     setIsEditDialogOpen(true);
   };
@@ -83,8 +83,8 @@ const CategoriesTable: React.FC = () => {
     
     try {
       const response = await updateCategory(selectedCategory.id as string, {
-        CategoryName: editFormData.categoryName,
-        Description: editFormData.description
+        title: editFormData.title,
+        description: editFormData.description
       });
 
       if (response.error) {
@@ -149,7 +149,7 @@ const CategoriesTable: React.FC = () => {
                 <Input
                   id="categoryName"
                   name="categoryName"
-                  value={editFormData.categoryName}
+                  value={editFormData.title}
                   onChange={handleFormChange}
                   className="col-span-3"
                 />
