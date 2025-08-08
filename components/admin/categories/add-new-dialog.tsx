@@ -16,8 +16,8 @@ import { toast } from 'sonner';
 import { addCategory } from '@/actions/admin/admin';
 
 interface AddNewFormData {
-  CategoryName: string;
-  Description: string;
+  title: string;
+  description: string;
 }
 
 interface AddNewDialogProps {
@@ -31,8 +31,8 @@ export function AddNewDialog({
 }: AddNewDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<AddNewFormData>({
-    CategoryName: '',
-    Description: '',
+    title: '',
+    description: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,8 +40,8 @@ export function AddNewDialog({
 
     try {
       const response = await addCategory({
-        CategoryName: formData.CategoryName,
-        Description: formData.Description
+        title: formData.title,
+        description: formData.description
       });
 
       if (response.error) {
@@ -49,8 +49,8 @@ export function AddNewDialog({
         return;
       }
 
-      toast.success(`"${formData.CategoryName}" category added successfully`);
-      setFormData({ CategoryName: '', Description: '' });
+      toast.success(`"${formData.title}" category added successfully`);
+      setFormData({ title: '', description: '' });
       setIsOpen(false);
       setTriggerState(!triggerState); 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -82,10 +82,10 @@ export function AddNewDialog({
           <div className="space-y-2">
             <Label htmlFor="categoryName">Category Name</Label>
             <Input
-              id="categoryName"
-              name="CategoryName"
+              id="title"
+              name="title"
               placeholder="e.g., Faith"
-              value={formData.CategoryName}
+              value={formData.title}
               onChange={handleChange}
               required
             />
@@ -94,9 +94,9 @@ export function AddNewDialog({
             <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
-              name="Description"
+              name="description"
               placeholder="Add a description for this category"
-              value={formData.Description}
+              value={formData.description}
               onChange={handleChange}
               required
             />
